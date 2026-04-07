@@ -15,7 +15,7 @@ export function createMainWindow() {
     // transparent: true,
     // frame: false,
     webPreferences: {
-      preload: fileURLToPath(new URL('../preload.ts', import.meta.url)),
+      preload: fileURLToPath(new URL('../preload.js', import.meta.url)),
       sandbox: false,
       contextIsolation: true,
       nodeIntegration: false,
