@@ -4,6 +4,11 @@
     "packages/*"
   ],
   "scripts": {
-    "start:electron": "bun run --cwd packages/electron start"
+    "dev": "concurrently \"npm run dev:vue\" \"npm run dev:electron\"",
+    "dev:vue": "npm run dev -w packages/vue",
+    "dev:electron": "npm run dev -w packages/electron"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }
