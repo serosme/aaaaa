@@ -1,0 +1,9 @@
+{
+  "name": "aaaaa",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start:electron": "bun run --cwd packages/electron start"
+  }
+}
