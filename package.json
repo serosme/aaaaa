@@ -4,11 +4,16 @@
     "packages/*"
   ],
   "scripts": {
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "dev": "concurrently \"npm run dev:vue\" \"npm run dev:electron\"",
     "dev:vue": "npm run dev -w packages/vue",
     "dev:electron": "npm run dev -w packages/electron"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "@antfu/eslint-config": "^8.0.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^10.1.0",
+    "eslint-plugin-format": "^2.0.1"
   }
 }
