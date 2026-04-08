@@ -1,3 +1,3 @@
 <template>
-  <RouterView />
+    首页
 </template>

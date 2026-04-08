@@ -1,3 +1,3 @@
 <template>
-  <RouterView />
+    测试
 </template>
