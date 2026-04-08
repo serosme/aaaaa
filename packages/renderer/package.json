@@ -1,5 +1,5 @@
 {
-  "name": "vue",
+  "name": "renderer",
   "type": "module",
   "version": "0.0.0",
   "private": true,
@@ -11,6 +11,8 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@nuxt/ui": "^4.6.1",
+    "tailwindcss": "^4.2.2",
     "vue": "^3.5.31",
     "vue-router": "^5.0.4"
   },

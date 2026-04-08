@@ -6,8 +6,8 @@
   "scripts": {
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "dev": "concurrently \"npm run dev:vue\" \"npm run dev:electron\"",
-    "dev:vue": "npm run dev -w packages/vue",
+    "dev": "concurrently \"npm run dev:renderer\" \"npm run dev:electron\"",
+    "dev:renderer": "npm run dev -w packages/renderer",
     "dev:electron": "npm run dev -w packages/electron"
   },
   "devDependencies": {
