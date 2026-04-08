@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { fileURLToPath, pathToFileURL } from 'node:url'
+import { fileURLToPath } from 'node:url'
 import { app, BrowserWindow, Menu } from 'electron'
 
 let mainWindow: BrowserWindow
