@@ -88,7 +88,6 @@ function selectAndClear(fn: () => unknown | Promise<unknown>) {
       :ui="commandPaletteUi"
       :fuse="{
         resultLimit: 7,
-        matchAllWhenSearchEmpty: false,
       }"
       class="border-2 border-red-500"
     />
