@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+
+const version = ref('')
+
+onMounted(async () => {
+  version.value = await window.electronAPI.getNodeVersion()
+})
+</script>
+
 <template>
-  测试
+  <div>
+    <h2>Node version:</h2>
+    <p>{{ version }}</p>
+  </div>
 </template>
