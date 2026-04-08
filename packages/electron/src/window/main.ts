@@ -23,8 +23,7 @@ export function createMainWindow() {
   })
 
   if (app.isPackaged) {
-    // import(pathToFileURL(path.join(app.getAppPath(), '.output', 'server', 'index.mjs')).href)
-    mainWindow.loadFile(path.join(app.getAppPath(), '.output', 'public', 'index.html'))
+    mainWindow.loadFile(path.join(app.getAppPath(), '../renderer/dist/index.html'))
   }
 
   mainWindow.loadURL('http://localhost:5173')

@@ -7,6 +7,7 @@ import VueRouter from 'vue-router/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [
     VueRouter(),
     vue(),
