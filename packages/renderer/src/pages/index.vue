@@ -13,31 +13,23 @@ const pages = [
     onSelect: selectAndClear(() => router.replace('/chat')),
   },
   {
-    label: 'Music',
-    icon: 'i-lucide-globe',
-    onSelect: selectAndClear(() => router.replace('/music')),
-  },
-  {
-    label: 'Music1',
-    icon: 'i-lucide-globe',
-    onSelect: selectAndClear(() => router.replace('/music1')),
-  },
-  {
-    label: 'Setting',
-    icon: 'i-lucide-globe',
-    onSelect: selectAndClear(() => router.replace('/setting')),
-  },
-  {
     label: 'Test',
     icon: 'i-lucide-globe',
     onSelect: selectAndClear(() => router.replace('/test')),
   },
-  {
-    label: 'Recorder',
-    icon: 'i-lucide-globe',
-    onSelect: selectAndClear(() => router.replace('/recorder')),
-  },
 ]
+
+// Applications
+const appItems = ref<any[]>([])
+window.electronAPI.getApplications().then((apps) => {
+  appItems.value = apps.map(app => ({
+    label: app.name,
+    icon: 'i-lucide-app-window',
+    onSelect: selectAndClear(() =>
+      window.electronAPI.launchApplication(app.appId),
+    ),
+  }))
+})
 
 // 分组数组
 const groups = computed(() => [
@@ -45,6 +37,11 @@ const groups = computed(() => [
     id: 'pages',
     label: 'Pages',
     items: pages,
+  },
+  {
+    id: 'applications',
+    label: 'Applications',
+    items: appItems.value,
   },
 ])
 
