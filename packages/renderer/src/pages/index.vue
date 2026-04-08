@@ -59,6 +59,14 @@ const groups = computed(() => [
   },
 ])
 
+const visibleGroups = computed(() => {
+  return searchTerm.value.trim() ? groups.value : []
+})
+
+const commandPaletteUi = computed(() => ({
+  empty: searchTerm.value.trim() ? '' : 'hidden',
+}))
+
 function selectAndClear(fn: () => unknown | Promise<unknown>) {
   return async () => {
     searchTerm.value = ''
@@ -76,7 +84,8 @@ function selectAndClear(fn: () => unknown | Promise<unknown>) {
   <div class="bg-white">
     <UCommandPalette
       v-model:search-term="searchTerm"
-      :groups="groups"
+      :groups="visibleGroups"
+      :ui="commandPaletteUi"
       :fuse="{
         resultLimit: 7,
         matchAllWhenSearchEmpty: false,
