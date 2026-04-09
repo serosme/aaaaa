@@ -18,6 +18,7 @@
   },
   "build": {
     "appId": "tools",
+    "productName": "Tools",
     "directories": {
       "output": "release"
     },
