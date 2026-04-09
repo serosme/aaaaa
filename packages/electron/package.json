@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "main": "dist/main.js",
   "scripts": {
-    "dev": "tsc -b tsconfig.json --force && electron .",
-    "build": "tsc -b tsconfig.json --force",
-    "release": "npm --prefix ../renderer run build && tsc -b tsconfig.json --force && electron-builder --win"
+    "dev": "tsc -p tsconfig.json && electron .",
+    "build": "tsc -p ts  config.json",
+    "release": "npm --prefix ../renderer run build && tsc -p tsconfig.json && electron-builder --win"
   },
   "devDependencies": {
     "@app/shared": "*",
