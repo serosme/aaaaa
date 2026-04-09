@@ -4,6 +4,11 @@
     "rootDir": "src",
     "outDir": "dist"
   },
+  "references": [
+    {
+      "path": "../shared"
+    }
+  ],
   "include": ["src/**/*.ts"],
   "exclude": ["dist", "release", "node_modules"]
 }

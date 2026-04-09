@@ -1,7 +1,7 @@
 import type { Application } from '@app/shared'
 import { execSync, spawn } from 'node:child_process'
-import { IPC_CHANNELS } from '@app/shared'
 import { ipcMain } from 'electron'
+import { IPC_CHANNELS } from './channels.js'
 
 export function getApplications(): Application[] {
   const stdout = execSync(

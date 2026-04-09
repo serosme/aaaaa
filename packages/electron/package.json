@@ -4,14 +4,12 @@
   "version": "1.0.0",
   "main": "dist/main.js",
   "scripts": {
-    "dev": "npm --prefix ../shared run build && tsc -p tsconfig.json && electron .",
-    "build": "npm --prefix ../shared run build && tsc -p tsconfig.json",
-    "release": "npm --prefix ../shared run build && npm --prefix ../renderer run build && tsc -p tsconfig.json && electron-builder --win"
-  },
-  "dependencies": {
-    "@app/shared": "*"
+    "dev": "tsc -b tsconfig.json --force && electron .",
+    "build": "tsc -b tsconfig.json --force",
+    "release": "npm --prefix ../renderer run build && tsc -b tsconfig.json --force && electron-builder --win"
   },
   "devDependencies": {
+    "@app/shared": "*",
     "electron": "^41.1.1",
     "electron-builder": "^26.0.12",
     "typescript": "^6.0.0"

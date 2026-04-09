@@ -1,6 +1,6 @@
 import type { ElectronAPI } from '@app/shared'
-import { IPC_CHANNELS } from '@app/shared'
 import { contextBridge, ipcRenderer } from 'electron'
+import { IPC_CHANNELS } from './ipc/channels.js'
 
 const electronAPI: ElectronAPI = {
   getNodeVersion: () => {
