@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm --prefix ../shared run build && tsc -p tsconfig.json && electron .",
     "build": "npm --prefix ../shared run build && tsc -p tsconfig.json",
-    "dist:win": "npm run build && npm --prefix ../renderer run build && electron-builder"
+    "dist:win": "npm run build && npm --prefix ../renderer run build && electron-builder --win"
   },
   "dependencies": {
     "@app/shared": "*"
@@ -28,12 +28,8 @@
         "to": "renderer/dist"
       }
     ],
-    "extraMetadata": {
-      "main": "dist/main.js"
-    },
-    "nsis": {
-      "createDesktopShortcut": false,
-      "deleteAppDataOnUninstall": true
+    "win": {
+      "target": "zip"
     }
   }
 }
