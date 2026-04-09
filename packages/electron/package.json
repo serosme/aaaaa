@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm --prefix ../shared run build && tsc -p tsconfig.json && electron .",
     "build": "npm --prefix ../shared run build && tsc -p tsconfig.json",
-    "dist:win": "npm run build && npm --prefix ../renderer run build && electron-builder --win"
+    "release": "npm --prefix ../shared run build && npm --prefix ../renderer run build && tsc -p tsconfig.json && electron-builder --win"
   },
   "dependencies": {
     "@app/shared": "*"
@@ -22,6 +22,9 @@
     "directories": {
       "output": "release"
     },
+    "electronLanguages": [
+      "zh-CN"
+    ],
     "asar": false,
     "extraResources": [
       {
