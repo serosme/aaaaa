@@ -8,10 +8,10 @@ export function createAppTray(
   onTrayClick: () => void,
   ...menuItems: MenuItemConstructorOptions[]
 ) {
-  const trayIconPath = path.join(app.getAppPath(), '../renderer', 'public', 'favicon.ico')
+  const trayIconPath = path.join(app.getAppPath(), './public/favicon.ico')
   tray = new Tray(trayIconPath)
 
-  tray.setToolTip('tools')
+  tray.setToolTip('Tools')
 
   if (menuItems.length > 0) {
     const menu = Menu.buildFromTemplate(menuItems)
