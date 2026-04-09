@@ -1,15 +1,53 @@
 {
   "name": "electron",
   "type": "module",
+  "version": "1.0.0",
+  "productName": "aaaaa",
+  "description": "Electron desktop application",
   "main": "dist/main.js",
   "scripts": {
-    "dev": "npm --prefix ../shared run build && tsc -p tsconfig.json && electron ."
+    "dev": "npm --prefix ../shared run build && tsc -p tsconfig.json && electron .",
+    "build": "npm --prefix ../shared run build && tsc -p tsconfig.json",
+    "dist:win": "npm run build && npm --prefix ../renderer run build && electron-builder --win nsis"
   },
   "dependencies": {
     "@app/shared": "*"
   },
   "devDependencies": {
     "electron": "^41.1.1",
+    "electron-builder": "^26.0.12",
     "typescript": "^6.0.0"
+  },
+  "build": {
+    "appId": "com.aaaaa.app",
+    "directories": {
+      "output": "release"
+    },
+    "asar": false,
+    "files": [
+      "dist/**/*",
+      "package.json",
+      "../renderer/dist/**/*",
+      "../renderer/public/**/*"
+    ],
+    "extraMetadata": {
+      "main": "dist/main.js"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
   }
 }

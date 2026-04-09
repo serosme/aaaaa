@@ -25,8 +25,9 @@ export function createMainWindow() {
   if (app.isPackaged) {
     mainWindow.loadFile(path.join(app.getAppPath(), '../renderer/dist/index.html'))
   }
-
-  mainWindow.loadURL('http://localhost:5173')
+  else {
+    mainWindow.loadURL('http://localhost:5173')
+  }
   mainWindow.webContents.openDevTools()
 
   // 监听窗口关闭事件，隐藏窗口而不是退出应用
