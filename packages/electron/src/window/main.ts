@@ -27,8 +27,8 @@ export function createMainWindow() {
   }
   else {
     mainWindow.loadURL('http://localhost:5173')
+    mainWindow.webContents.openDevTools()
   }
-  mainWindow.webContents.openDevTools()
 
   // 监听窗口关闭事件，隐藏窗口而不是退出应用
   mainWindow.on('close', (event: Electron.Event) => {

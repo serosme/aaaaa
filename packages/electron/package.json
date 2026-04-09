@@ -2,13 +2,11 @@
   "name": "electron",
   "type": "module",
   "version": "1.0.0",
-  "productName": "aaaaa",
-  "description": "Electron desktop application",
   "main": "dist/main.js",
   "scripts": {
     "dev": "npm --prefix ../shared run build && tsc -p tsconfig.json && electron .",
     "build": "npm --prefix ../shared run build && tsc -p tsconfig.json",
-    "dist:win": "npm run build && npm --prefix ../renderer run build && electron-builder --win nsis"
+    "dist:win": "npm run build && npm --prefix ../renderer run build && electron-builder"
   },
   "dependencies": {
     "@app/shared": "*"
@@ -19,35 +17,23 @@
     "typescript": "^6.0.0"
   },
   "build": {
-    "appId": "com.aaaaa.app",
+    "appId": "tools",
     "directories": {
       "output": "release"
     },
     "asar": false,
-    "files": [
-      "dist/**/*",
-      "package.json",
-      "../renderer/dist/**/*",
-      "../renderer/public/**/*"
+    "extraResources": [
+      {
+        "from": "../renderer/dist",
+        "to": "renderer/dist"
+      }
     ],
     "extraMetadata": {
       "main": "dist/main.js"
     },
-    "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
-        }
-      ]
-    },
     "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true
+      "createDesktopShortcut": false,
+      "deleteAppDataOnUninstall": true
     }
   }
 }
