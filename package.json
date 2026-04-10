@@ -8,10 +8,8 @@
   "scripts": {
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "dev": "concurrently \"npm run dev:renderer\" \"npm run dev:electron\"",
-    "dev:renderer": "npm run dev -w packages/renderer",
-    "dev:electron": "npm run dev -w packages/electron",
-    "release": "npm run release -w packages/electron"
+    "dev": "concurrently \"npm run dev -w packages/renderer\" \"npm run dev -w packages/electron\"",
+    "build": "npm run build -w packages/electron"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^8.0.0",

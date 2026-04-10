@@ -5,8 +5,7 @@
   "main": "dist/main.js",
   "scripts": {
     "dev": "tsc -p tsconfig.json && electron .",
-    "build": "tsc -p ts  config.json",
-    "release": "npm --prefix ../renderer run build && tsc -p tsconfig.json && electron-builder --win"
+    "build": "npm --prefix ../renderer run build && tsc -p tsconfig.json && electron-builder --win"
   },
   "devDependencies": {
     "@app/shared": "*",
