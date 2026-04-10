@@ -1,4 +1,5 @@
-import { onBeforeUnmount, ref } from 'vue'
+import { useBase64 } from '@vueuse/core'
+import { onBeforeUnmount, ref, watch } from 'vue'
 
 export function useRecorder() {
   const isRecording = ref(false)
@@ -35,12 +36,8 @@ export function useRecorder() {
         const blob = new Blob(chunks, { type: 'audio/webm' })
         audioBlob.value = blob
         audioUrl.value = URL.createObjectURL(blob)
-        audioBase64.value = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader()
-          reader.onload = () => resolve((reader.result as string).split(',')[1] || '')
-          reader.onerror = reject
-          reader.readAsDataURL(blob)
-        })
+        const { execute } = useBase64(blob, { dataUrl: false })
+        audioBase64.value = await execute()
         stopStream()
         mediaRecorder = null
       }

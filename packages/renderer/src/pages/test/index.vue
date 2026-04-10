@@ -1,16 +1,23 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { useSpeechRecognition } from '@/composables/useSpeechRecognition'
 
-const version = ref('')
-
-onMounted(async () => {
-  version.value = await window.electronAPI.getNodeVersion()
-})
+const { base64, result, start, stop, isListening } = useSpeechRecognition()
 </script>
 
 <template>
   <div>
-    <h2>Node version:</h2>
-    <p>{{ version }}</p>
+    <p>
+      {{ result }}
+    </p>
+    <p>
+      {{ base64 }}
+    </p>
+    <UButton
+      :color="isListening ? 'error' : 'success' "
+      :icon="isListening ? 'i-lucide-square' : 'i-lucide-mic'"
+      @click="isListening ? stop() : start() "
+    >
+      {{ isListening ? '停止录音' : '开始录音' }}
+    </UButton>
   </div>
 </template>
