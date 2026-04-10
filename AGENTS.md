@@ -3,6 +3,7 @@
 ## 项目结构
 
 基于 npm workspaces 的 Electron + Vue 3 单体仓库：
+
 - `packages/renderer` - Vue 3 前端（Vite、Nuxt UI、Tailwind CSS 4、vue-router 文件路由）
 - `packages/electron` - Electron 主进程（TypeScript、electron-builder 打包）
 - `packages/shared` - 类型定义包（`@app/shared`，仅导出接口/类型，无具体实现）
