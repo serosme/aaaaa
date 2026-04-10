@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import type { ElectronAPI } from '@app/shared'
+import type { ElectronAPI } from 'shared'
 
 export {}
 

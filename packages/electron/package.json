@@ -8,9 +8,9 @@
     "build": "npm --prefix ../renderer run build && tsc -p tsconfig.json && electron-builder --win"
   },
   "devDependencies": {
-    "@app/shared": "*",
     "electron": "^41.1.1",
     "electron-builder": "^26.0.12",
+    "shared": "*",
     "typescript": "^6.0.0"
   },
   "build": {

@@ -1,4 +1,4 @@
-import type { ElectronAPI } from '@app/shared'
+import type { ElectronAPI } from 'shared'
 import { contextBridge, ipcRenderer } from 'electron'
 import { IPC_CHANNELS } from './ipc/channels.js'
 

@@ -1,4 +1,4 @@
-import type { Application } from '@app/shared'
+import type { Application } from 'shared'
 import { execSync, spawn } from 'node:child_process'
 import { ipcMain } from 'electron'
 import { IPC_CHANNELS } from './channels.js'

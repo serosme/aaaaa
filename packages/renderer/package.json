@@ -17,11 +17,11 @@
     "vue-router": "^5.0.4"
   },
   "devDependencies": {
-    "@app/shared": "*",
     "@tsconfig/node24": "^24.0.4",
     "@types/node": "^24.12.0",
     "@vitejs/plugin-vue": "^6.0.5",
     "@vue/tsconfig": "^0.9.1",
+    "shared": "*",
     "typescript": "~6.0.0",
     "vite": "^8.0.3",
     "vue-tsc": "^3.2.6"

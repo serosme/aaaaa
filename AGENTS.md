@@ -6,7 +6,7 @@
 
 - `packages/renderer` - Vue 3 前端（Vite、Nuxt UI、Tailwind CSS 4、vue-router 文件路由）
 - `packages/electron` - Electron 主进程（TypeScript、electron-builder 打包）
-- `packages/shared` - 类型定义包（`@app/shared`，仅导出接口/类型，无具体实现）
+- `packages/shared` - 类型定义包（`shared`，仅导出接口/类型，无具体实现）
 
 ## 命令
 
