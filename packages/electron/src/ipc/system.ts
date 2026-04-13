@@ -31,10 +31,6 @@ export function launchApplication(appId: string): void {
 }
 
 export function registerIpc() {
-  ipcMain.handle(IPC_CHANNELS.GET_NODE_VERSION, () => {
-    return '1111'
-  })
-
   ipcMain.handle(IPC_CHANNELS.GET_APPLICATIONS, () => {
     return getApplications()
   })
