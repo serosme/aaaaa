@@ -17,6 +17,7 @@ export function createMainWindow() {
     webPreferences: {
       preload: fileURLToPath(new URL('../preload.js', import.meta.url)),
       sandbox: false,
+      webSecurity: false,
       contextIsolation: true,
       nodeIntegration: false,
     },

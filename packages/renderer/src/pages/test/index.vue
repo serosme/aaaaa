@@ -1,17 +1,11 @@
 <script setup lang="ts">
 import { useSpeechRecognition } from '@/composables/useSpeechRecognition'
 
-const { base64, result, start, stop, isListening } = useSpeechRecognition()
+const { result, start, stop, isListening } = useSpeechRecognition()
 </script>
 
 <template>
   <div>
-    <p>
-      {{ result }}
-    </p>
-    <p>
-      {{ base64 }}
-    </p>
     <UButton
       :color="isListening ? 'error' : 'success' "
       :icon="isListening ? 'i-lucide-square' : 'i-lucide-mic'"
@@ -19,5 +13,8 @@ const { base64, result, start, stop, isListening } = useSpeechRecognition()
     >
       {{ isListening ? '停止录音' : '开始录音' }}
     </UButton>
+    <p>
+      {{ result }}
+    </p>
   </div>
 </template>
