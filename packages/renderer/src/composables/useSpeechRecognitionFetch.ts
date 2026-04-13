@@ -6,10 +6,15 @@ interface FetchResp {
 
 export function useSpeechRecognitionFetch() {
   return async (base64: string) => {
+    const key = await window.electronAPI.config.get('key')
+    if (!key) {
+      return 'Key 不存在'
+    }
+
     const response = await fetch('https://openspeech.bytedance.com/api/v3/auc/bigmodel/recognize/flash', {
       method: 'POST',
       headers: {
-        'x-api-key': '043e700f-e83a-4b89-a007-c526ab320dfd',
+        'x-api-key': '-1',
         'X-Api-Resource-Id': 'volc.bigasr.auc',
         'X-Api-Request-Id': '-1',
         'X-Api-Sequence': '-1',

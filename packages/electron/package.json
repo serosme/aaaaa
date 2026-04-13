@@ -7,6 +7,9 @@
     "dev": "tsc -p tsconfig.json && electron .",
     "build": "npm --prefix ../renderer run build && tsc -p tsconfig.json && electron-builder --win"
   },
+  "dependencies": {
+    "electron-store": "^11.0.2"
+  },
   "devDependencies": {
     "electron": "^41.1.1",
     "electron-builder": "^26.0.12",
