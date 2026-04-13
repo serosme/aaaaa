@@ -2,15 +2,18 @@
 import { useClipboard, useMagicKeys } from '@vueuse/core'
 import { watch } from 'vue'
 import { useSpeechRecognition } from '@/composables/useSpeechRecognition'
-import { useSpeechRecognitionToast } from '@/composables/useToast'
+import { useSpeechRecognitionToast } from '@/composables/useSpeechRecognitionToast'
 
-const { add, remove } = useSpeechRecognitionToast()
+const { add, update, remove } = useSpeechRecognitionToast()
 const { result, start, stop } = useSpeechRecognition()
 
 const { copy } = useClipboard()
 watch(result, (result) => {
   copy(result)
-  console.log(result)
+  update(result)
+  setTimeout(() => {
+    remove()
+  }, 1000)
 })
 
 const { space } = useMagicKeys()
@@ -21,7 +24,7 @@ watch(() => space?.value, (pressed) => {
   }
   else {
     stop()
-    remove()
+    update('识别中...')
   }
 })
 </script>
