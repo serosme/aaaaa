@@ -4,7 +4,6 @@ export interface Application {
 }
 
 export interface ElectronAPI {
-  getNodeVersion: () => Promise<string>
   getApplications: () => Promise<Application[]>
   launchApplication: (appId: string) => Promise<void>
 }

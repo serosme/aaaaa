@@ -3,9 +3,6 @@ import { contextBridge, ipcRenderer } from 'electron'
 import { IPC_CHANNELS } from './ipc/channels.js'
 
 const electronAPI: ElectronAPI = {
-  getNodeVersion: () => {
-    return ipcRenderer.invoke(IPC_CHANNELS.GET_NODE_VERSION)
-  },
   getApplications: () => {
     return ipcRenderer.invoke(IPC_CHANNELS.GET_APPLICATIONS)
   },
