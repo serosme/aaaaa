@@ -90,6 +90,7 @@ function selectAndClear(fn: () => unknown | Promise<unknown>) {
         resultLimit: 7,
       }"
       class="border-2 border-red-500"
+      @keydown.space.prevent
     />
   </div>
 </template>

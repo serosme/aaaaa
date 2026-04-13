@@ -1,25 +1,27 @@
 <script setup lang="ts">
-import { useMagicKeys } from '@vueuse/core'
+import { useClipboard, useMagicKeys } from '@vueuse/core'
 import { watch } from 'vue'
 import { useSpeechRecognition } from '@/composables/useSpeechRecognition'
+import { useSpeechRecognitionToast } from '@/composables/useToast'
 
+const { add, remove } = useSpeechRecognitionToast()
 const { result, start, stop } = useSpeechRecognition()
 
-const keys = useMagicKeys()
-const key = keys['Alt+`']
-
+const { copy } = useClipboard()
 watch(result, (result) => {
+  copy(result)
   console.log(result)
 })
 
-watch(() => key?.value, (pressed) => {
+const { space } = useMagicKeys()
+watch(() => space?.value, (pressed) => {
   if (pressed) {
-    console.log('开始录音')
     start()
+    add()
   }
   else {
-    console.log('结束录音')
     stop()
+    remove()
   }
 })
 </script>
