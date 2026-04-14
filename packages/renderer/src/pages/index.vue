@@ -14,6 +14,11 @@ interface CommandItem {
 // Pages
 const pages = [
   {
+    label: 'Setting',
+    icon: 'i-lucide-globe',
+    onSelect: selectAndClear(() => router.replace('/setting')),
+  },
+  {
     label: 'Chat',
     icon: 'i-lucide-globe',
     onSelect: selectAndClear(() => router.replace('/chat')),
