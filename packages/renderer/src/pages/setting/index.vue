@@ -15,6 +15,11 @@ const items: NavigationMenuItem[] = [
 ]
 </script>
 
+<route lang="yaml">
+meta:
+  layout: setting
+</route>
+
 <template>
   <div class="flex flex-col flex-1">
     <UHeader title="Setting" :ui="{ container: 'px-4!' }" />

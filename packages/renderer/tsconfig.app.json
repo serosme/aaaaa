@@ -13,6 +13,8 @@
       ]
     },
 
+    "types": ["vite-plugin-layouts/client"],
+
     // Extra safety for array and object lookups, but may have false positives.
     "noUncheckedIndexedAccess": true
   },
