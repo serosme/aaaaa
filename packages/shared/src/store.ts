@@ -1,12 +1,10 @@
-export interface MusicItem {
+export interface MusicSchema {
   path: string
-  name: string
 }
 
 export interface StoreSchema {
   key: string
-  musicDir: string
-  music: MusicItem[]
+  music: MusicSchema
 }
 
 export type ConfKey = keyof StoreSchema

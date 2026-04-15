@@ -1,7 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import type { FormSubmitEvent } from '@nuxt/ui'
+import type { MusicSchema } from 'shared'
+import { reactive } from 'vue'
 
-const musicLibraryPath = ref('')
+const music = reactive<MusicSchema>({
+  path: 'C:\\Users\\User\\Downloads',
+})
+
+async function onSubmit(event: FormSubmitEvent<MusicSchema>) {
+  console.log(event.data)
+}
 </script>
 
 <route lang="yaml">
@@ -11,7 +19,7 @@ meta:
 
 <template>
   <UCard class="h-full">
-    <UForm>
+    <UForm :state="music" @submit="onSubmit">
       <UPageCard
         title="音乐"
         variant="naked"
@@ -30,7 +38,7 @@ meta:
           description="Will appear on receipts, invoices, and other communication."
           class="flex max-sm:flex-col justify-between items-start gap-4"
         >
-          <UInput />
+          <UInput v-model="music.path" />
         </UFormField>
         <USeparator />
         <UFormField
