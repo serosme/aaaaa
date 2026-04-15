@@ -12,6 +12,7 @@ const electronAPI: ElectronAPI = {
   selectDirectory: () => {
     return ipcRenderer.invoke(IPC_CHANNELS.SELECT_DIRECTORY)
   },
+
   config: {
     get: <K extends ConfKey>(key: K) => {
       return ipcRenderer.invoke(IPC_CHANNELS.CONFIG_GET, key) as Promise<StoreSchema[K]>

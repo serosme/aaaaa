@@ -2,17 +2,18 @@
 import type { FormSubmitEvent } from '@nuxt/ui'
 import type { MusicSchema } from 'shared'
 import { reactive } from 'vue'
+import { electron } from '@/utils/electron'
 
 const music = reactive<MusicSchema>({
   path: 'C:\\Users\\User\\Downloads',
 })
 
 async function onSubmit(event: FormSubmitEvent<MusicSchema>) {
-  await window.electronAPI.config.set('music', event.data)
+  await electron.config.set('music', event.data)
 }
 
 async function selectMusicPath() {
-  const path = await window.electronAPI.selectDirectory()
+  const path = await electron.selectDirectory()
 
   if (path) {
     music.path = path

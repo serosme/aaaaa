@@ -2,8 +2,13 @@ export interface MusicSchema {
   path: string
 }
 
-export interface StoreSchema {
+export interface SpeechRecognition {
+  url: string
   key: string
+}
+
+export interface StoreSchema {
+  speechRecognition: SpeechRecognition
   music: MusicSchema
 }
 

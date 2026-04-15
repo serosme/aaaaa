@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { electron } from '@/utils/electron'
 
 const router = useRouter()
 const searchTerm = ref('')
@@ -35,12 +36,12 @@ const appItems = ref<CommandItem[]>([])
 
 onMounted(async () => {
   try {
-    const apps = await window.electronAPI.getApplications()
+    const apps = await electron.getApplications()
     appItems.value = apps.map(app => ({
       label: app.name,
       icon: 'i-lucide-app-window',
       onSelect: selectAndClear(() =>
-        window.electronAPI.launchApplication(app.appId),
+        electron.launchApplication(app.appId),
       ),
     }))
   }
