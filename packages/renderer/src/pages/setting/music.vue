@@ -8,7 +8,15 @@ const music = reactive<MusicSchema>({
 })
 
 async function onSubmit(event: FormSubmitEvent<MusicSchema>) {
-  console.log(event.data)
+  await window.electronAPI.config.set('music', event.data)
+}
+
+async function selectMusicPath() {
+  const path = await window.electronAPI.selectDirectory()
+
+  if (path) {
+    music.path = path
+  }
 }
 </script>
 
@@ -38,7 +46,7 @@ meta:
           description="Will appear on receipts, invoices, and other communication."
           class="flex max-sm:flex-col justify-between items-start gap-4"
         >
-          <UInput v-model="music.path" />
+          <UInput v-model="music.path" readonly @click="selectMusicPath" />
         </UFormField>
         <USeparator />
         <UFormField

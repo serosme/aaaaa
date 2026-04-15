@@ -8,6 +8,7 @@ export interface Application {
 export interface ElectronAPI {
   getApplications: () => Promise<Application[]>
   launchApplication: (appId: string) => Promise<void>
+  selectDirectory: () => Promise<string | undefined>
 
   config: {
     get: <K extends ConfKey>(key: K) => Promise<StoreSchema[K]>
