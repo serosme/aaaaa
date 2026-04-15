@@ -2,32 +2,33 @@ import type { StoreSchema } from 'shared'
 import Store from 'electron-store'
 
 const schema = {
-  key: {
-    type: 'string',
-    default: '',
-  },
-  musicDir: {
-    type: 'string',
-    default: 'C:\\Users\\User\\Downloads',
-  },
   music: {
-    type: 'array',
-    default: [],
-    items: {
-      type: 'object',
-      properties: {
-        path: {
-          type: 'string',
-          minLength: 1,
-        },
-        name: {
-          type: 'string',
-          minLength: 1,
-        },
-      },
-      required: ['path', 'name'],
-      additionalProperties: false,
+    type: 'object',
+    default: {
+      path: 'C:\\Users\\User\\Downloads',
     },
+    properties: {
+      path: {
+        type: 'string',
+      },
+    },
+    required: ['path'],
+  },
+  speechRecognition: {
+    type: 'object',
+    default: {
+      url: 'https://openspeech.bytedance.com/api/v3/auc/bigmodel/recognize/flash',
+      key: '',
+    },
+    properties: {
+      url: {
+        type: 'string',
+      },
+      key: {
+        type: 'string',
+      },
+    },
+    required: ['url', 'key'],
   },
 }
 

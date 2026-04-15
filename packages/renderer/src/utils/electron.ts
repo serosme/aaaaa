@@ -29,4 +29,23 @@ export const electron = {
       return getElectronAPI().config.has(key)
     },
   },
+
+  conf: {
+    music: {
+      get: () => {
+        return getElectronAPI().conf.music.get()
+      },
+      set: (value) => {
+        return getElectronAPI().conf.music.set(value)
+      },
+    },
+    speechRecognition: {
+      get: () => {
+        return getElectronAPI().conf.speechRecognition.get()
+      },
+      set: (value) => {
+        return getElectronAPI().conf.speechRecognition.set(value)
+      },
+    },
+  },
 } satisfies ElectronAPI

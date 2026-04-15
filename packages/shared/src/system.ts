@@ -1,4 +1,4 @@
-import type { ConfKey, StoreSchema } from './store.js'
+import type { ConfKey, MusicSchema, SpeechRecognition, StoreSchema } from './store.js'
 
 export interface Application {
   name: string
@@ -15,5 +15,16 @@ export interface ElectronAPI {
     set: <K extends ConfKey>(key: K, value: StoreSchema[K]) => Promise<void>
     unset: (key: ConfKey) => Promise<void>
     has: (key: ConfKey) => Promise<boolean>
+  }
+
+  conf: {
+    music: {
+      get: () => Promise<MusicSchema>
+      set: (value: MusicSchema) => Promise<void>
+    }
+    speechRecognition: {
+      get: () => Promise<SpeechRecognition>
+      set: (value: SpeechRecognition) => Promise<void>
+    }
   }
 }

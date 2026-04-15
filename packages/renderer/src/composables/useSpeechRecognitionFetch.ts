@@ -8,7 +8,7 @@ interface FetchResp {
 
 export function useSpeechRecognitionFetch() {
   return async (base64: string) => {
-    const speechRecognition = await electron.config.get('speechRecognition')
+    const speechRecognition = await electron.conf.speechRecognition.get()
     const key = speechRecognition?.key
     if (!key) {
       return 'Key 不存在'

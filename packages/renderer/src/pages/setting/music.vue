@@ -9,7 +9,7 @@ const music = reactive<MusicSchema>({
 })
 
 async function onSubmit(event: FormSubmitEvent<MusicSchema>) {
-  await electron.config.set('music', event.data)
+  await electron.conf.music.set(event.data)
 }
 
 async function selectMusicPath() {

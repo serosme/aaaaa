@@ -27,6 +27,25 @@ const electronAPI: ElectronAPI = {
       return ipcRenderer.invoke(IPC_CHANNELS.CONFIG_HAS, key)
     },
   },
+
+  conf: {
+    music: {
+      get: () => {
+        return ipcRenderer.invoke(IPC_CHANNELS.CONFIG_GET, 'music') as Promise<StoreSchema['music']>
+      },
+      set: (value: StoreSchema['music']) => {
+        return ipcRenderer.invoke(IPC_CHANNELS.CONFIG_SET, 'music', value)
+      },
+    },
+    speechRecognition: {
+      get: () => {
+        return ipcRenderer.invoke(IPC_CHANNELS.CONFIG_GET, 'speechRecognition') as Promise<StoreSchema['speechRecognition']>
+      },
+      set: (value: StoreSchema['speechRecognition']) => {
+        return ipcRenderer.invoke(IPC_CHANNELS.CONFIG_SET, 'speechRecognition', value)
+      },
+    },
+  },
 }
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI)
