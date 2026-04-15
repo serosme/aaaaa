@@ -1,51 +1,17 @@
-import type { ElectronAPI } from 'shared'
-
-function getElectronAPI(): ElectronAPI {
-  return window.electronAPI
-}
+import type { ElectronAPI, MusicConf } from 'shared'
 
 export const electron = {
-  getApplications: () => {
-    return getElectronAPI().getApplications()
-  },
-  launchApplication: (appId) => {
-    return getElectronAPI().launchApplication(appId)
-  },
-  selectDirectory: () => {
-    return getElectronAPI().selectDirectory()
+  application: {
+    get: () => window.electronAPI.application.get(),
+    launch: (id: string) => window.electronAPI.application.launch(id),
   },
 
-  config: {
-    get: (key) => {
-      return getElectronAPI().config.get(key)
-    },
-    set: (key, value) => {
-      return getElectronAPI().config.set(key, value)
-    },
-    unset: (key) => {
-      return getElectronAPI().config.unset(key)
-    },
-    has: (key) => {
-      return getElectronAPI().config.has(key)
-    },
-  },
+  selectDirectory: () => window.electronAPI.selectDirectory(),
 
   conf: {
     music: {
-      get: () => {
-        return getElectronAPI().conf.music.get()
-      },
-      set: (value) => {
-        return getElectronAPI().conf.music.set(value)
-      },
-    },
-    speechRecognition: {
-      get: () => {
-        return getElectronAPI().conf.speechRecognition.get()
-      },
-      set: (value) => {
-        return getElectronAPI().conf.speechRecognition.set(value)
-      },
+      get: () => window.electronAPI.conf.music.get(),
+      set: (conf: MusicConf) => window.electronAPI.conf.music.set(conf),
     },
   },
 } satisfies ElectronAPI

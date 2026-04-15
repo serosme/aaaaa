@@ -1,4 +1,4 @@
-export interface MusicSchema {
+export interface MusicConf {
   path: string
 }
 
@@ -9,7 +9,7 @@ export interface SpeechRecognition {
 
 export interface StoreSchema {
   speechRecognition: SpeechRecognition
-  music: MusicSchema
+  music: MusicConf
 }
 
 export type ConfKey = keyof StoreSchema

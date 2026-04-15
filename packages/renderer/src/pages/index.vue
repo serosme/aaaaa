@@ -36,12 +36,12 @@ const appItems = ref<CommandItem[]>([])
 
 onMounted(async () => {
   try {
-    const apps = await electron.getApplications()
+    const apps = await electron.application.get()
     appItems.value = apps.map(app => ({
       label: app.name,
       icon: 'i-lucide-app-window',
       onSelect: selectAndClear(() =>
-        electron.launchApplication(app.appId),
+        electron.application.launch(app.id),
       ),
     }))
   }
