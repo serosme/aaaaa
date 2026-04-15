@@ -16,7 +16,7 @@ const items: NavigationMenuItem[] = [
 </script>
 
 <template>
-  <div class="h-screen w-screen flex flex-col flex-1 border-2 border-blue-500">
+  <div class="h-screen w-screen flex flex-col flex-1">
     <UHeader title="Setting" :ui="{ container: 'px-4!' }" />
 
     <div class="flex flex-1 min-h-0">
@@ -35,7 +35,7 @@ const items: NavigationMenuItem[] = [
         />
       </USidebar>
 
-      <div class="flex-1 p-4">
+      <div class="flex flex-1 min-h-0 flex-col p-4">
         <RouterView />
       </div>
     </div>

@@ -10,19 +10,16 @@ meta:
 </route>
 
 <template>
-  <UCard>
+  <UCard class="h-full">
     <UForm>
       <UPageCard
-        title="Profile"
-        description="These informations will be displayed publicly."
+        title="音乐"
         variant="naked"
         orientation="horizontal"
         class="mb-4"
       >
         <UButton
-          form="settings"
           label="Save changes"
-          color="neutral"
           type="submit"
           class="w-fit lg:ms-auto"
         />
@@ -31,23 +28,18 @@ meta:
         <UFormField
           label="音乐库位置"
           description="Will appear on receipts, invoices, and other communication."
-          required
           class="flex max-sm:flex-col justify-between items-start gap-4"
         >
-          <UInput
-            autocomplete="off"
-          />
+          <UInput />
         </UFormField>
         <USeparator />
         <UFormField
           label="密钥"
           description="Used to sign in, for email receipts and product updates."
-          required
           class="flex max-sm:flex-col justify-between items-start gap-4"
         >
           <UInput
-            type="email"
-            autocomplete="off"
+            type="password"
           />
         </UFormField>
       </UPageCard>
