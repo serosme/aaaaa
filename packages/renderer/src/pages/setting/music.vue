@@ -1,19 +1,31 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
-import type { MusicSchema } from 'shared'
-import { reactive } from 'vue'
+import type { MusicConf } from 'shared'
+import { onMounted, reactive, toRaw } from 'vue'
 import { electron } from '@/utils/electron'
 
-const music = reactive<MusicSchema>({
-  path: 'C:\\Users\\User\\Downloads',
+const toast = useToast()
+
+const music = reactive<MusicConf>({
+  path: '',
 })
 
-async function onSubmit(event: FormSubmitEvent<MusicSchema>) {
-  await electron.conf.music.set(event.data)
+onMounted(async () => {
+  const data = await electron.conf.music.get()
+  music.path = data.path
+})
+
+async function onSubmit(event: FormSubmitEvent<MusicConf>) {
+  await electron.conf.music.set({ ...toRaw(event.data) })
+  toast.add({
+    title: '成功',
+    color: 'success',
+    duration: 1200,
+  })
 }
 
 async function selectMusicPath() {
-  const path = await electron.selectDirectory()
+  const path = await electron.path.folder.select()
 
   if (path) {
     music.path = path
@@ -38,7 +50,7 @@ meta:
         <UButton
           label="Save changes"
           type="submit"
-          class="w-fit lg:ms-auto"
+          class="cursor-pointer w-fit lg:ms-auto"
         />
       </UPageCard>
       <UPageCard>

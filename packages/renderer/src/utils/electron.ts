@@ -6,7 +6,11 @@ export const electron = {
     launch: (id: string) => window.electronAPI.application.launch(id),
   },
 
-  selectDirectory: () => window.electronAPI.selectDirectory(),
+  path: {
+    folder: {
+      select: () => window.electronAPI.path.folder.select(),
+    },
+  },
 
   conf: {
     music: {

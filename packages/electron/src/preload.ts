@@ -14,8 +14,10 @@ const electronAPI: ElectronAPI = {
     launch: (id: string) => invoke('application:launch', id),
   },
 
-  selectDirectory(): Promise<string> {
-    throw new Error('Function not implemented.')
+  path: {
+    folder: {
+      select: () => invoke('path:folder:select'),
+    },
   },
 
   conf: {
@@ -24,7 +26,6 @@ const electronAPI: ElectronAPI = {
       set: (conf: MusicConf) => invoke('conf:music:set', conf),
     },
   },
-
 }
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI)

@@ -1,4 +1,4 @@
-import type { Application } from '../application/index.js'
+import type { Application } from '../ipc/application.js'
 import type { MusicConf } from '../store.js'
 
 export interface ElectronAPI {
@@ -7,7 +7,11 @@ export interface ElectronAPI {
     launch: (id: string) => Promise<boolean>
   }
 
-  selectDirectory: () => Promise<string>
+  path: {
+    folder: {
+      select: () => Promise<string>
+    }
+  }
 
   conf: {
     music: {
