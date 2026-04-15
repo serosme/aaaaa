@@ -12,6 +12,11 @@ const items: NavigationMenuItem[] = [
     icon: 'i-lucide-music',
     to: '/setting/music',
   },
+  {
+    label: 'Asr',
+    icon: 'i-lucide-voice',
+    to: '/setting/asr',
+  },
 ]
 </script>
 
