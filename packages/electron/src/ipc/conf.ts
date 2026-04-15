@@ -10,4 +10,13 @@ export function confIpc() {
     set('music', conf)
     return true
   })
+
+  handle('conf:asr:get', () => {
+    return get('asr')
+  })
+
+  handle('conf:asr:set', (_event, conf) => {
+    set('asr', conf)
+    return true
+  })
 }

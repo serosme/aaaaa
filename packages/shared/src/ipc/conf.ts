@@ -1,6 +1,5 @@
-export interface MusicConf {
-  path: string
-}
+import type { AsrConf } from '../types/asr.js'
+import type { MusicConf } from '../types/music.js'
 
 export interface ConfIPCChannels {
   'conf:music:get': {
@@ -9,6 +8,14 @@ export interface ConfIPCChannels {
   }
   'conf:music:set': {
     args: [MusicConf]
+    return: boolean
+  }
+  'conf:asr:get': {
+    args: []
+    return: AsrConf
+  }
+  'conf:asr:set': {
+    args: [AsrConf]
     return: boolean
   }
 }

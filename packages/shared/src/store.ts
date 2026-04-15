@@ -1,14 +1,8 @@
-export interface MusicConf {
-  path: string
-}
-
-export interface SpeechRecognition {
-  url: string
-  key: string
-}
+import type { AsrConf } from './types/asr.js'
+import type { MusicConf } from './types/music.js'
 
 export interface StoreSchema {
-  speechRecognition: SpeechRecognition
+  asr: AsrConf
   music: MusicConf
 }
 

@@ -5,7 +5,7 @@ const schema = {
   music: {
     type: 'object',
     default: {
-      path: 'C:\\Users\\User\\Downloads',
+      path: '',
     },
     properties: {
       path: {
@@ -14,21 +14,17 @@ const schema = {
     },
     required: ['path'],
   },
-  speechRecognition: {
+  asr: {
     type: 'object',
     default: {
-      url: 'https://openspeech.bytedance.com/api/v3/auc/bigmodel/recognize/flash',
       key: '',
     },
     properties: {
-      url: {
-        type: 'string',
-      },
       key: {
         type: 'string',
       },
     },
-    required: ['url', 'key'],
+    required: ['key'],
   },
 }
 
