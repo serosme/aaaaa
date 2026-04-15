@@ -1,5 +1,5 @@
 import { execSync, spawn } from 'node:child_process'
-import { handle } from './index.js'
+import { handle } from '../ipc.js'
 
 export function applicationIpc() {
   handle('application:get', () => {

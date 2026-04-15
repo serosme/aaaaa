@@ -1,7 +1,7 @@
 import { app, globalShortcut } from 'electron'
 import { applicationIpc } from './ipc/application.js'
 import { confIpc } from './ipc/conf.js'
-import { createAppTray } from './tray.js'
+import { createAppTray } from './tray/index.js'
 import { createMainWindow, removeCloseListener, toggleMainWindow } from './window/main.js'
 
 app.whenReady().then(() => {

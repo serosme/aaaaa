@@ -1,5 +1,5 @@
-import { get, set } from '../config-store.js'
-import { handle } from './index.js'
+import { handle } from '../ipc.js'
+import { get, set } from '../utils/config-store.js'
 
 export function confIpc() {
   handle('conf:music:get', () => {
