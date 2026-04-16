@@ -1,4 +1,5 @@
 import path from 'node:path'
+import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import { app, BrowserWindow, Menu } from 'electron'
 
@@ -23,12 +24,11 @@ export function createMainWindow() {
     },
   })
 
-  if (app.isPackaged) {
-    mainWindow.loadFile(path.join(app.getAppPath(), '../renderer/dist/index.html'))
+  if (process.env.NODE_ENV === 'dev') {
+    mainWindow.loadURL('http://localhost:5173')
   }
   else {
-    mainWindow.loadURL('http://localhost:5173')
-    mainWindow.webContents.openDevTools()
+    mainWindow.loadFile(path.join(app.getAppPath(), '../renderer/dist/index.html'))
   }
 
   // 监听窗口关闭事件，隐藏窗口而不是退出应用

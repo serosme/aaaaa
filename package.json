@@ -9,6 +9,7 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "dev": "concurrently \"npm run dev -w packages/renderer\" \"npm run dev -w packages/electron\"",
+    "preview": "npm run preview -w packages/electron",
     "build": "npm run build -w packages/electron"
   },
   "devDependencies": {
