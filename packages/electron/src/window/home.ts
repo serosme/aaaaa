@@ -22,7 +22,7 @@ export function createWindow(routePath: string): number {
     newWindow.webContents.openDevTools()
   }
   else {
-    newWindow.loadFile(path.join(app.getAppPath(), '../renderer/.output/public/index.html'))
+    newWindow.loadFile(path.join(app.getAppPath(), '../renderer/.output/public/index.html'), { hash: routePath })
     newWindow.webContents.openDevTools()
   }
 
