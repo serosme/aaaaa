@@ -4,4 +4,14 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: ['@nuxt/ui'],
   css: ['~/assets/css/main.css'],
+  ssr: false,
+  ui: {
+    fonts: false,
+  },
+  icon: {
+    provider: 'none',
+    clientBundle: {
+      scan: true,
+    },
+  },
 })
