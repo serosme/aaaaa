@@ -14,7 +14,7 @@ const items: NavigationMenuItem[] = [
   },
   {
     label: 'Asr',
-    icon: 'i-lucide-voice',
+    icon: 'i-lucide-mic',
     to: '/setting/asr',
   },
 ]

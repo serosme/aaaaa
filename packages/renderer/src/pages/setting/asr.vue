@@ -1,35 +1,27 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
-import type { MusicConf } from 'shared'
+import type { AsrConf } from 'shared'
 import { onMounted, reactive, toRaw } from 'vue'
 import { electron } from '@/utils/electron'
 
 const toast = useToast()
 
-const music = reactive<MusicConf>({
-  path: '',
+const asr = reactive<AsrConf>({
+  key: '',
 })
 
 onMounted(async () => {
-  const data = await electron.conf.music.get()
-  music.path = data.path
+  const data = await electron.conf.asr.get()
+  asr.key = data.key
 })
 
-async function onSubmit(event: FormSubmitEvent<MusicConf>) {
-  await electron.conf.music.set({ ...toRaw(event.data) })
+async function onSubmit(event: FormSubmitEvent<AsrConf>) {
+  await electron.conf.asr.set({ ...toRaw(event.data) })
   toast.add({
     title: '成功',
     color: 'success',
     duration: 1200,
   })
-}
-
-async function selectMusicPath() {
-  const path = await electron.path.folder.select()
-
-  if (path) {
-    music.path = path
-  }
 }
 </script>
 
@@ -40,9 +32,9 @@ meta:
 
 <template>
   <UCard class="h-full">
-    <UForm :state="music" @submit="onSubmit">
+    <UForm :state="asr" @submit="onSubmit">
       <UPageCard
-        title="音乐"
+        title="语音识别"
         variant="naked"
         orientation="horizontal"
         class="mb-4"
@@ -55,19 +47,12 @@ meta:
       </UPageCard>
       <UPageCard>
         <UFormField
-          label="音乐库位置"
-          description="Will appear on receipts, invoices, and other communication."
-          class="flex max-sm:flex-col justify-between items-start gap-4"
-        >
-          <UInput v-model="music.path" readonly @click="selectMusicPath" />
-        </UFormField>
-        <USeparator />
-        <UFormField
           label="密钥"
           description="Used to sign in, for email receipts and product updates."
           class="flex max-sm:flex-col justify-between items-start gap-4"
         >
           <UInput
+            v-model="asr.key"
             type="password"
           />
         </UFormField>
