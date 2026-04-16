@@ -29,7 +29,8 @@ export function createMainWindow() {
     mainWindow.webContents.openDevTools()
   }
   else {
-    mainWindow.loadFile(path.join(app.getAppPath(), '../renderer/dist/index.html'))
+    mainWindow.loadFile(path.join(app.getAppPath(), '../aaa/.output/public/index.html'))
+    mainWindow.webContents.openDevTools()
   }
 
   // 监听窗口关闭事件，隐藏窗口而不是退出应用

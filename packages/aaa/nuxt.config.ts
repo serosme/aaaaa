@@ -8,12 +8,22 @@ export default defineNuxtConfig({
   ui: {
     fonts: false,
   },
+  app: {
+    cdnURL: './',
+  },
+  router: {
+    options: {
+      hashMode: true,
+    },
+  },
   icon: {
     provider: 'none',
     clientBundle: {
       scan: true,
       icons: [
         'lucide:search',
+        'lucide:menu',
+        'lucide:check',
       ],
     },
   },

@@ -5,7 +5,7 @@
   "main": "dist/main.js",
   "scripts": {
     "dev": "tsc -p tsconfig.json && cross-env NODE_ENV=dev electron .",
-    "preview": "npm --prefix ../renderer run build && tsc -p tsconfig.json && electron .",
+    "preview": "npm --prefix ../aaa run generate && tsc -p tsconfig.json && electron .",
     "build": "npm --prefix ../renderer run build && tsc -p tsconfig.json && electron-builder --win"
   },
   "dependencies": {

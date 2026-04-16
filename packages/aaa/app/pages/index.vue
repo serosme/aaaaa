@@ -71,13 +71,13 @@ const commandPaletteUi = computed(() => ({
 
 function selectAndClear(fn: () => unknown | Promise<unknown>) {
   return async () => {
-    searchTerm.value = ''
     try {
       await fn()
     }
     catch (error) {
       console.error('Command execution failed.', error)
     }
+    searchTerm.value = ''
   }
 }
 </script>
