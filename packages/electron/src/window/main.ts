@@ -29,7 +29,7 @@ export function createMainWindow() {
     mainWindow.webContents.openDevTools()
   }
   else {
-    mainWindow.loadFile(path.join(app.getAppPath(), '../aaa/.output/public/index.html'))
+    mainWindow.loadFile(path.join(app.getAppPath(), '../renderer/.output/public/index.html'))
     mainWindow.webContents.openDevTools()
   }
 
