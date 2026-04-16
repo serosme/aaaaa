@@ -1,10 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  layout: 'setting',
+})
 </script>
-
-<route lang="yaml">
-meta:
-  layout: setting
-</route>
 
 <template>
   <UCard>

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
 import type { MusicConf } from 'shared'
-import { onMounted, reactive, toRaw } from 'vue'
-import { electron } from '@/utils/electron'
+
+definePageMeta({
+  layout: 'setting',
+})
 
 const toast = useToast()
 
@@ -32,11 +34,6 @@ async function selectMusicPath() {
   }
 }
 </script>
-
-<route lang="yaml">
-meta:
-  layout: setting
-</route>
 
 <template>
   <UCard class="h-full">

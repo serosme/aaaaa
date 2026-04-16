@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useSpeechRecognition } from '@/composables/useSpeechRecognition'
-
 const { result, start, stop, isListening } = useSpeechRecognition()
 </script>
 

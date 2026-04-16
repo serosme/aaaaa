@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
 import type { AsrConf } from 'shared'
-import { onMounted, reactive, toRaw } from 'vue'
-import { electron } from '@/utils/electron'
+
+definePageMeta({
+  layout: 'setting',
+})
 
 const toast = useToast()
 
@@ -24,11 +26,6 @@ async function onSubmit(event: FormSubmitEvent<AsrConf>) {
   })
 }
 </script>
-
-<route lang="yaml">
-meta:
-  layout: setting
-</route>
 
 <template>
   <UCard class="h-full">
