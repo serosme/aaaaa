@@ -16,6 +16,6 @@
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.102",
-    "shared": "*"
+    "shared": "^1.0.0"
   }
 }

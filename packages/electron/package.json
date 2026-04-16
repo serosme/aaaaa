@@ -14,9 +14,9 @@
   "devDependencies": {
     "cross-env": "^10.1.0",
     "electron": "^41.1.1",
-    "electron-builder": "^26.0.12",
-    "shared": "*",
-    "typescript": "^6.0.0"
+    "electron-builder": "^26.8.1",
+    "shared": "^1.0.0",
+    "typescript": "^6.0.2"
   },
   "build": {
     "appId": "tools",
