@@ -12,7 +12,9 @@ export default defineNuxtConfig({
     provider: 'none',
     clientBundle: {
       scan: true,
-      icons: [],
+      icons: [
+        'lucide:search',
+      ],
     },
   },
 })
