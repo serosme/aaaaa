@@ -48,7 +48,7 @@ meta:
         class="mb-4"
       >
         <UButton
-          label="Save changes"
+          label="保存"
           type="submit"
           class="cursor-pointer w-fit lg:ms-auto"
         />
@@ -60,16 +60,6 @@ meta:
           class="flex max-sm:flex-col justify-between items-start gap-4"
         >
           <UInput v-model="music.path" readonly @click="selectMusicPath" />
-        </UFormField>
-        <USeparator />
-        <UFormField
-          label="密钥"
-          description="Used to sign in, for email receipts and product updates."
-          class="flex max-sm:flex-col justify-between items-start gap-4"
-        >
-          <UInput
-            type="password"
-          />
         </UFormField>
       </UPageCard>
     </UForm>

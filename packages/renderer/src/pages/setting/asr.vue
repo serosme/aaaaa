@@ -40,7 +40,7 @@ meta:
         class="mb-4"
       >
         <UButton
-          label="Save changes"
+          label="保存"
           type="submit"
           class="cursor-pointer w-fit lg:ms-auto"
         />
