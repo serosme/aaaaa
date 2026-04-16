@@ -1,5 +1,3 @@
-import { electron } from '@/utils/electron'
-
 interface FetchResp {
   result: {
     text: string

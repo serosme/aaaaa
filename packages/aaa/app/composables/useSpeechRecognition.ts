@@ -1,6 +1,4 @@
 import { useBase64, useUserMedia } from '@vueuse/core'
-import { ref, watch } from 'vue'
-import { useSpeechRecognitionFetch } from '@/composables/useSpeechRecognitionFetch'
 
 export function useSpeechRecognition() {
   const { stream, start: startStream, stop: stopStream } = useUserMedia({
