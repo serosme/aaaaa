@@ -30,8 +30,8 @@
     "asar": false,
     "extraResources": [
       {
-        "from": "../renderer/dist",
-        "to": "renderer/dist"
+        "from": "../renderer/.output/public",
+        "to": "renderer/.output/public"
       }
     ],
     "win": {
