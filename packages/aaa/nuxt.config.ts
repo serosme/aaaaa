@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     provider: 'none',
     clientBundle: {
       scan: true,
+      icons: [],
     },
   },
 })

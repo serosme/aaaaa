@@ -1,3 +1,7 @@
 <template>
-  <UAvatar icon="i-lucide-image" size="md" />
+  <UApp>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </UApp>
 </template>

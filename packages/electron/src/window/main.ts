@@ -25,7 +25,7 @@ export function createMainWindow() {
   })
 
   if (process.env.NODE_ENV === 'dev') {
-    mainWindow.loadURL('http://localhost:5173')
+    mainWindow.loadURL('http://localhost:3000')
   }
   else {
     mainWindow.loadFile(path.join(app.getAppPath(), '../renderer/dist/index.html'))
