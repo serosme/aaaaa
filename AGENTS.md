@@ -25,12 +25,14 @@ npm run lint:fix     # 自动修复 lint 问题
 - **路由**：Nuxt 文件系统路由（`app/pages/`），使用 `hashMode: true`
 - **布局系统**：Nuxt 布局（`app/layouts/`）
 - **IPC 通信**：
-  - `packages/shared/src/ipc/` 定义 IPC 通道类型（`application`、`conf`、`path`）
-  - `packages/electron/src/ipc/` 实现 IPC 处理逻辑（`application.ts`、`conf.ts`、`path.ts`）
+  - `packages/shared/src/ipc/` 定义 IPC 通道类型（`application`、`conf`、`path`、`window`）
+  - `packages/electron/src/ipc/` 实现 IPC 处理逻辑（`application.ts`、`conf.ts`、`path.ts`、`window.ts`）
   - `packages/electron/src/preload.ts` 通过 `contextBridge` 暴露 `electronAPI`
 - **配置存储**：使用 `electron-store` 存储配置（`MusicConf`、`AsrConf`）
 - **系统托盘**：`packages/electron/src/tray/` 实现托盘菜单
-- **窗口管理**：`packages/electron/src/window/main.ts` 管理主窗口（显示/隐藏/切换）
+- **窗口管理**：
+  - `packages/electron/src/window/main.ts` 管理主窗口（显示/隐藏/切换）
+  - `packages/electron/src/window/home.ts` 创建新窗口（支持路由跳转，生产环境使用 hash 参数）
 - **输出目录**：`packages/*/dist/` 为编译输出，`packages/renderer/.output/` 为 Nuxt 构建输出，`packages/electron/release/` 为打包输出（Windows zip）
 - **样式**：Tailwind CSS 4，VSCode 中 CSS 文件关联为 `tailwindcss` 语言
 
