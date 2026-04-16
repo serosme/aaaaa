@@ -40,3 +40,5 @@ auto-imports.d.ts
 components.d.ts
 
 release
+node_modules
+.nuxt
