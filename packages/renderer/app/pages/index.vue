@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const router = useRouter()
 const searchTerm = ref('')
 
 interface CommandItem {
@@ -13,17 +12,17 @@ const pages = [
   {
     label: 'Setting',
     icon: 'i-lucide-globe',
-    onSelect: selectAndClear(() => router.replace('/setting')),
+    onSelect: selectAndClear(() => electron.window.create('/setting')),
   },
   {
     label: 'Chat',
     icon: 'i-lucide-globe',
-    onSelect: selectAndClear(() => router.replace('/chat')),
+    onSelect: selectAndClear(() => electron.window.create('/chat')),
   },
   {
     label: 'Test',
     icon: 'i-lucide-globe',
-    onSelect: selectAndClear(() => router.replace('/test')),
+    onSelect: selectAndClear(() => electron.window.create('/test')),
   },
 ]
 

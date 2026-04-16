@@ -1,18 +1,34 @@
 <script setup lang="ts">
-const { result, start, stop, isListening } = useSpeechRecognition()
+const testWindowId = ref<number | null>(null)
+
+async function openSetting() {
+  testWindowId.value = await electron.window.create('/setting')
+}
+
+async function closeSetting() {
+  if (testWindowId.value !== null) {
+    await electron.window.close(testWindowId.value)
+    testWindowId.value = null
+  }
+}
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col gap-2">
     <UButton
-      :color="isListening ? 'error' : 'success' "
-      :icon="isListening ? 'i-lucide-square' : 'i-lucide-mic'"
-      @click="isListening ? stop() : start() "
+      color="primary"
+      icon="i-lucide-plus"
+      @click="openSetting"
     >
-      {{ isListening ? '停止录音' : '开始录音' }}
+      打开 Setting
     </UButton>
-    <p>
-      {{ result }}
-    </p>
+    <UButton
+      color="error"
+      icon="i-lucide-x"
+      :disabled="testWindowId === null"
+      @click="closeSetting"
+    >
+      关闭 Setting
+    </UButton>
   </div>
 </template>

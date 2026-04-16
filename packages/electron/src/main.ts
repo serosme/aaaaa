@@ -2,6 +2,7 @@ import { app, globalShortcut } from 'electron'
 import { applicationIpc } from './ipc/application.js'
 import { confIpc } from './ipc/conf.js'
 import { pathIpc } from './ipc/path.js'
+import { windowIpc } from './ipc/window.js'
 import { createAppTray } from './tray/index.js'
 import { createMainWindow, removeCloseListener, toggleMainWindow } from './window/main.js'
 
@@ -9,10 +10,11 @@ app.whenReady().then(() => {
   // 创建主窗口
   createMainWindow()
 
-  // 注册
+  // 注册 IPC
   applicationIpc()
   confIpc()
   pathIpc()
+  windowIpc()
 
   // 注册全局快捷键
   globalShortcut.register('Alt+Space', () => toggleMainWindow())

@@ -30,6 +30,11 @@ const electronAPI: ElectronAPI = {
       set: (conf: AsrConf) => invoke('conf:asr:set', conf),
     },
   },
+
+  window: {
+    create: (path: string) => invoke('window:create', path),
+    close: (id: number) => invoke('window:close', id),
+  },
 }
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI)

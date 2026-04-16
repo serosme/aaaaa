@@ -22,4 +22,9 @@ export const electron = {
       set: (conf: AsrConf) => window.electronAPI.conf.asr.set(conf),
     },
   },
+
+  window: {
+    create: (path: string) => window.electronAPI.window.create(path),
+    close: (id: number) => window.electronAPI.window.close(id),
+  },
 } satisfies ElectronAPI

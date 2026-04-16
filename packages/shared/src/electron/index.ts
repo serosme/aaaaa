@@ -24,4 +24,9 @@ export interface ElectronAPI {
       set: (conf: AsrConf) => Promise<boolean>
     }
   }
+
+  window: {
+    create: (path: string) => Promise<number>
+    close: (id: number) => Promise<boolean>
+  }
 }
