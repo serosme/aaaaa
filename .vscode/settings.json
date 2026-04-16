@@ -1,4 +1,9 @@
 {
+
+  // 是否从资源管理器中分析和排除 .gitignore 中的条目
+  "explorer.excludeGitIgnore": true,
+
+  // Tailwind CSS
   "files.associations": {
     "*.css": "tailwindcss"
   },
