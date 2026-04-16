@@ -24,6 +24,7 @@ export default defineNuxtConfig({
         'lucide:search',
         'lucide:menu',
         'lucide:check',
+        'lucide:x',
       ],
     },
   },
