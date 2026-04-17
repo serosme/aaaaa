@@ -8,28 +8,32 @@ definePageMeta({
 
 const toast = useToast()
 
-const asr = reactive<AsrConf>({
+const asrConf = reactive<AsrConf>({
   key: '',
 })
 
 onMounted(async () => {
-  const data = await electron.conf.asr.get()
-  asr.key = data.key
+  asrConf.key = (await $fetch<AsrConf>('/api/conf/asr')).key
 })
 
 async function onSubmit(event: FormSubmitEvent<AsrConf>) {
-  await electron.conf.asr.set({ ...toRaw(event.data) })
-  toast.add({
-    title: '成功',
-    color: 'success',
-    duration: 1200,
+  const success = await $fetch<boolean>('/api/conf/asr', {
+    method: 'post',
+    body: toRaw(event.data),
   })
+  if (success) {
+    toast.add({
+      title: '成功',
+      color: 'success',
+      duration: 1200,
+    })
+  }
 }
 </script>
 
 <template>
   <UCard class="h-full">
-    <UForm :state="asr" @submit="onSubmit">
+    <UForm :state="asrConf" @submit="onSubmit">
       <UPageCard
         title="语音识别"
         variant="naked"
@@ -49,7 +53,7 @@ async function onSubmit(event: FormSubmitEvent<AsrConf>) {
           class="flex max-sm:flex-col justify-between items-start gap-4"
         >
           <UInput
-            v-model="asr.key"
+            v-model="asrConf.key"
             type="password"
           />
         </UFormField>
