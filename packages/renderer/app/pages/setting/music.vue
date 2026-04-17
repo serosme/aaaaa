@@ -8,36 +8,40 @@ definePageMeta({
 
 const toast = useToast()
 
-const music = reactive<MusicConf>({
+const musicConf = reactive<MusicConf>({
   path: '',
 })
 
 onMounted(async () => {
-  const data = await electron.conf.music.get()
-  music.path = data.path
+  musicConf.path = (await $fetch<MusicConf>('/api/conf/music')).path
 })
 
 async function onSubmit(event: FormSubmitEvent<MusicConf>) {
-  await electron.conf.music.set({ ...toRaw(event.data) })
-  toast.add({
-    title: '成功',
-    color: 'success',
-    duration: 1200,
+  const success = await $fetch<boolean>('/api/conf/music', {
+    method: 'post',
+    body: toRaw(event.data),
   })
+  if (success) {
+    toast.add({
+      title: '成功',
+      color: 'success',
+      duration: 1200,
+    })
+  }
 }
 
 async function selectMusicPath() {
   const path = await electron.path.folder.select()
 
   if (path) {
-    music.path = path
+    musicConf.path = path
   }
 }
 </script>
 
 <template>
   <UCard class="h-full">
-    <UForm :state="music" @submit="onSubmit">
+    <UForm :state="musicConf" @submit="onSubmit">
       <UPageCard
         title="音乐"
         variant="naked"
@@ -56,7 +60,7 @@ async function selectMusicPath() {
           description="Will appear on receipts, invoices, and other communication."
           class="flex max-sm:flex-col justify-between items-start gap-4"
         >
-          <UInput v-model="music.path" readonly @click="selectMusicPath" />
+          <UInput v-model="musicConf.path" readonly @click="selectMusicPath" />
         </UFormField>
       </UPageCard>
     </UForm>

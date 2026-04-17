@@ -1,13 +1,22 @@
 <script setup lang="ts">
-const { data } = await useFetch('/api/hello')
-const { data: aa } = await useFetch('/api/conf/music')
-const { data: aaa } = await useFetch('/api/conf/music', {
-  method: 'POST',
-})
+import type { MusicConf } from 'shared'
+
+const musicConf = await $fetch<MusicConf>('/api/conf/music')
+
+const success = ref(false)
+
+async function setConf() {
+  success.value = await $fetch<boolean>('/api/conf/music', {
+    method: 'post',
+    body: musicConf,
+  })
+}
 </script>
 
 <template>
-  <pre>{{ data }}</pre>
-  <pre>{{ aa }}</pre>
-  <pre>{{ aaa }}</pre>
+  <pre>{{ musicConf }}</pre>
+  <UButton @click="setConf()">
+    保存
+  </UButton>
+  <pre>{{ success }}</pre>
 </template>
