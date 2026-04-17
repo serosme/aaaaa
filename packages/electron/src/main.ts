@@ -1,6 +1,5 @@
 import { app, globalShortcut, Menu } from 'electron'
 import { applicationIpc } from './ipc/application.js'
-import { confIpc } from './ipc/conf.js'
 import { pathIpc } from './ipc/path.js'
 import { windowIpc } from './ipc/window.js'
 import { createAppTray } from './tray/index.js'
@@ -20,7 +19,6 @@ app.whenReady().then(async () => {
 
   // 注册 IPC
   applicationIpc()
-  confIpc()
   pathIpc()
   windowIpc()
 

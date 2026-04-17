@@ -5,5 +5,3 @@ export interface StoreSchema {
   asr: AsrConf
   music: MusicConf
 }
-
-export type ConfKey = keyof StoreSchema

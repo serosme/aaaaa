@@ -1,4 +1,4 @@
-import type { AsrConf, ElectronAPI, IPCChannels, MusicConf } from 'shared'
+import type { ElectronAPI, IPCChannels } from 'shared'
 import { contextBridge, ipcRenderer } from 'electron'
 
 export function invoke<K extends keyof IPCChannels>(
@@ -17,17 +17,6 @@ const electronAPI: ElectronAPI = {
   path: {
     folder: {
       select: () => invoke('path:folder:select'),
-    },
-  },
-
-  conf: {
-    music: {
-      get: () => invoke('conf:music:get'),
-      set: (conf: MusicConf) => invoke('conf:music:set', conf),
-    },
-    asr: {
-      get: () => invoke('conf:asr:get'),
-      set: (conf: AsrConf) => invoke('conf:asr:set', conf),
     },
   },
 

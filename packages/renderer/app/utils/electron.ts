@@ -1,4 +1,4 @@
-import type { AsrConf, ElectronAPI, MusicConf } from 'shared'
+import type { ElectronAPI } from 'shared'
 
 export const electron = {
   application: {
@@ -9,17 +9,6 @@ export const electron = {
   path: {
     folder: {
       select: () => window.electronAPI.path.folder.select(),
-    },
-  },
-
-  conf: {
-    music: {
-      get: () => window.electronAPI.conf.music.get(),
-      set: (conf: MusicConf) => window.electronAPI.conf.music.set(conf),
-    },
-    asr: {
-      get: () => window.electronAPI.conf.asr.get(),
-      set: (conf: AsrConf) => window.electronAPI.conf.asr.set(conf),
     },
   },
 
