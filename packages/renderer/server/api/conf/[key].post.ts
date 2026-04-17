@@ -1,7 +1,11 @@
-import type { MusicConf } from 'shared'
+import type { StoreSchema } from 'shared'
 
 export default defineEventHandler(async (event): Promise<boolean> => {
-  const body = await readBody<MusicConf>(event)
-  conf.set('music', body)
+  const key = getRouterParam(event, 'key') as keyof StoreSchema
+  if (!key || !conf.has(key)) {
+    throw createError({ statusCode: 404, message: 'Conf not found' })
+  }
+  const body = await readBody<StoreSchema[typeof key]>(event)
+  conf.set(key, body)
   return true
 })
