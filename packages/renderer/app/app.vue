@@ -14,12 +14,19 @@ watch(result, (result) => {
 })
 
 const { space } = useMagicKeys()
+let timer: ReturnType<typeof setTimeout> | null = null
 watch(() => space?.value, (pressed) => {
   if (pressed) {
-    start()
-    add()
+    timer = setTimeout(() => {
+      start()
+      add()
+    }, 200)
   }
   else {
+    if (timer) {
+      clearTimeout(timer)
+      timer = null
+    }
     stop()
     update('识别中...')
   }
