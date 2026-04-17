@@ -13,8 +13,6 @@ export function useSpeechRecognition() {
   let recorder: MediaRecorder
   let chunks: Blob[] = []
 
-  const fetch = useSpeechRecognitionFetch()
-
   watch(stream, (s) => {
     if (!s)
       return
@@ -33,7 +31,12 @@ export function useSpeechRecognition() {
 
   watch(base64, async (b) => {
     if (b) {
-      result.value = await fetch(b)
+      result.value = await $fetch<string>('/api/asr', {
+        method: 'post',
+        body: {
+          base64: b,
+        },
+      })
     }
   })
 
