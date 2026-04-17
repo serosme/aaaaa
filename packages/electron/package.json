@@ -31,8 +31,8 @@
     "asar": false,
     "extraResources": [
       {
-        "from": "../renderer/.output/public",
-        "to": "renderer/.output/public"
+        "from": "../renderer/.output",
+        "to": "renderer/.output"
       }
     ],
     "win": {
