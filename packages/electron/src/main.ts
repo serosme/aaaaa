@@ -10,13 +10,13 @@ import { useCommand } from './window/command.js'
 // 移除默认菜单栏
 Menu.setApplicationMenu(null)
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   // 启动渲染进程
   startRendererProcess()
 
   // 启动命令面板
   const { create, toggle } = useCommand()
-  create()
+  await create()
 
   // 注册 IPC
   applicationIpc()
