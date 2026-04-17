@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview"
+    "build": "nuxt build",
+    "preview": "nuxt build && nuxt preview"
   },
   "dependencies": {
     "@nuxt/ui": "^4.6.1",

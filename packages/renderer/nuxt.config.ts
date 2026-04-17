@@ -4,17 +4,8 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: ['@nuxt/ui'],
   css: ['~/assets/css/main.css'],
-  ssr: false,
   ui: {
     fonts: false,
-  },
-  app: {
-    cdnURL: './',
-  },
-  router: {
-    options: {
-      hashMode: true,
-    },
   },
   icon: {
     provider: 'none',
