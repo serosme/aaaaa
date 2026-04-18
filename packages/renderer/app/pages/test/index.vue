@@ -1,22 +1,41 @@
 <script setup lang="ts">
-import type { MusicConf } from 'shared'
+import type { Music } from 'shared'
+import { useMediaControls } from '@vueuse/core'
+import { onMounted, useTemplateRef } from 'vue'
 
-const musicConf = await $fetch<MusicConf>('/api/conf/music')
+const list = ref<Music[]>([])
+const src = ref('')
 
-const success = ref(false)
-
-async function setConf() {
-  success.value = await $fetch<boolean>('/api/conf/music', {
-    method: 'post',
-    body: musicConf,
-  })
+async function loadMusic() {
+  const data = await $fetch('/api/music')
+  list.value = data
+  if (data[0])
+    src.value = `/api/music/${data[0].id}`
 }
+
+onMounted(loadMusic)
+
+const video = useTemplateRef('audio')
+const { playing, currentTime, duration, volume } = useMediaControls(video, {
+  src,
+})
+
+// Change initial media properties
+onMounted(() => {
+  volume.value = 0.5
+  currentTime.value = 60
+})
 </script>
 
 <template>
-  <pre>{{ musicConf }}</pre>
-  <UButton @click="setConf()">
-    保存
-  </UButton>
-  <pre>{{ success }}</pre>
+  <ul>
+    <li v-for="item in list" :key="item.id">
+      {{ item.name }}
+    </li>
+  </ul>
+  <audio ref="audio" />
+  <button @click="playing = !playing">
+    Play / Pause
+  </button>
+  <span>{{ currentTime }} / {{ duration }}</span>
 </template>
