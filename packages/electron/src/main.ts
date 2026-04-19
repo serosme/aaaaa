@@ -4,6 +4,7 @@ import { pathIpc } from './ipc/path.js'
 import { windowIpc } from './ipc/window.js'
 import { createAppTray } from './tray/index.js'
 import { startRendererProcess } from './utils/window.js'
+import { useChat } from './window/chat.js'
 import { useCommand } from './window/command.js'
 
 // 移除默认菜单栏
@@ -16,6 +17,8 @@ app.whenReady().then(async () => {
   // 启动命令面板
   const { create, toggle } = useCommand()
   await create()
+
+  useChat()
 
   // 注册 IPC
   applicationIpc()
