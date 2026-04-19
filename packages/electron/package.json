@@ -8,9 +8,6 @@
     "preview": "npm --prefix ../renderer run build && tsc -p tsconfig.json && cross-env NODE_ENV=preview electron .",
     "build": "npm --prefix ../renderer run build && tsc -p tsconfig.json && electron-builder --win"
   },
-  "dependencies": {
-    "electron-store": "^11.0.2"
-  },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",
     "cross-env": "^10.1.0",
