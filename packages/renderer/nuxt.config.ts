@@ -8,15 +8,9 @@ export default defineNuxtConfig({
     fonts: false,
   },
   icon: {
-    provider: 'none',
-    clientBundle: {
-      scan: true,
-      icons: [
-        'lucide:search',
-        'lucide:menu',
-        'lucide:check',
-        'lucide:x',
-      ],
+    provider: 'server',
+    serverBundle: {
+      collections: ['lucide'],
     },
   },
   vite: {
