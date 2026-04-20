@@ -18,7 +18,7 @@ app.whenReady().then(async () => {
   const { create, toggle } = useCommand()
   await create()
 
-  useChat()
+  await useChat()
 
   // 注册 IPC
   applicationIpc()

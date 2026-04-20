@@ -1,6 +1,6 @@
-import { BrowserWindow, WebContentsView } from 'electron'
+import { BrowserWindow, session, WebContentsView } from 'electron'
 
-export function useChat() {
+export async function useChat() {
   const win = new BrowserWindow({
     width: 1600,
     height: 900,
@@ -13,7 +13,19 @@ export function useChat() {
   const sites = [
     { name: 'qwen', url: 'https://chat.qwen.ai' },
     { name: 'deepseek', url: 'https://chat.deepseek.com' },
+    { name: 'chatgpt', url: 'https://chatgpt.com' },
   ]
+
+  async function applyProxy(partition: string) {
+    const ses = session.fromPartition(partition)
+
+    await ses.setProxy({
+      proxyRules: 'http=127.0.0.1:7890;https=127.0.0.1:7890',
+    })
+  }
+  for (const site of sites) {
+    await applyProxy(`persist:${site.name}`)
+  }
 
   // 创建底部视图
   const bottomView = new WebContentsView({
