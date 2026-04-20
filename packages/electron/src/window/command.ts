@@ -16,6 +16,7 @@ export function useCommand() {
       width: 1280,
       height: 720,
       show: false,
+      titleBarStyle: 'hidden',
       skipTaskbar: true,
       // transparent: true,
       // frame: false,
