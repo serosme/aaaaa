@@ -1,4 +1,11 @@
+import { fileURLToPath } from 'node:url'
 import { BrowserWindow, session, WebContentsView } from 'electron'
+
+const chatViews: Record<string, WebContentsView> = {}
+
+export function getChatViews() {
+  return chatViews
+}
 
 export async function useChat() {
   const win = new BrowserWindow({
@@ -29,18 +36,30 @@ export async function useChat() {
 
   // 创建底部视图
   const bottomView = new WebContentsView({
-    webPreferences: { partition: 'persist:bottom' },
+    webPreferences: {
+      partition: 'persist:bottom',
+      preload: fileURLToPath(new URL('../preload.js', import.meta.url)),
+      sandbox: false,
+      contextIsolation: true,
+    },
   })
-  bottomView.webContents.loadURL('http://localhost:3000/test')
+  bottomView.webContents.loadURL('http://localhost:3000/chat')
   win.contentView.addChildView(bottomView)
+  bottomView.webContents.openDevTools()
 
   // 创建横向排布的视图
   const views = sites.map((site) => {
     const view = new WebContentsView({
-      webPreferences: { partition: `persist:${site.name}` },
+      webPreferences: {
+        partition: `persist:${site.name}`,
+        preload: fileURLToPath(new URL('../preload.js', import.meta.url)),
+        sandbox: false,
+        contextIsolation: true,
+      },
     })
     view.webContents.loadURL(site.url)
     win.contentView.addChildView(view)
+    chatViews[site.name] = view
     return view
   })
 
@@ -76,5 +95,6 @@ export async function useChat() {
   win.on('closed', () => {
     bottomView.webContents.close()
     views.forEach(view => view.webContents.close())
+    Object.keys(chatViews).forEach(key => delete chatViews[key])
   })
 }

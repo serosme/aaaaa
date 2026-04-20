@@ -6,6 +6,10 @@ export const electron = {
     launch: (id: string) => window.electronAPI.application.launch(id),
   },
 
+  chat: {
+    send: (text: string) => window.electronAPI.chat.send(text),
+  },
+
   path: {
     folder: {
       select: () => window.electronAPI.path.folder.select(),

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const input = ref('')
 
-function submit() {
-  console.log(input.value)
+async function submit() {
+  await electron.chat.send(input.value)
   input.value = ''
 }
 </script>

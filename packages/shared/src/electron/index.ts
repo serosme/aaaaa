@@ -6,6 +6,10 @@ export interface ElectronAPI {
     launch: (id: string) => Promise<boolean>
   }
 
+  chat: {
+    send: (text: string) => Promise<void>
+  }
+
   path: {
     folder: {
       select: () => Promise<string>

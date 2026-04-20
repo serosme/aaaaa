@@ -14,6 +14,10 @@ const electronAPI: ElectronAPI = {
     launch: (id: string) => invoke('application:launch', id),
   },
 
+  chat: {
+    send: (text: string) => invoke('chat:send', text),
+  },
+
   path: {
     folder: {
       select: () => invoke('path:folder:select'),
