@@ -20,6 +20,7 @@ export function useCommand() {
       skipTaskbar: true,
       // transparent: true,
       // frame: false,
+      // thickFrame: false,
       webPreferences: {
         preload: fileURLToPath(new URL('../preload.js', import.meta.url)),
         sandbox: false,
