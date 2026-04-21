@@ -1,11 +1,6 @@
 import type { ElectronAPI } from 'shared'
 
 export const electron = {
-  application: {
-    get: () => window.electronAPI.application.get(),
-    launch: (id: string) => window.electronAPI.application.launch(id),
-  },
-
   chat: {
     send: (text: string) => window.electronAPI.chat.send(text),
   },

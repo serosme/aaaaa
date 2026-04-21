@@ -27,24 +27,15 @@ const pages = [
 ]
 
 // Applications
-const appItems = ref<CommandItem[]>([])
-
-onMounted(async () => {
-  try {
-    const apps = await electron.application.get()
-    appItems.value = apps.map(app => ({
-      label: app.name,
-      icon: 'i-lucide-app-window',
-      onSelect: selectAndClear(() =>
-        electron.application.launch(app.id),
-      ),
-    }))
-  }
-  catch (error) {
-    console.error('Failed to load applications.', error)
-    appItems.value = []
-  }
-})
+const { apps, launch } = useApp()
+const appItems = computed<CommandItem[]>(() =>
+  apps.value.map(app => ({
+    label: app.name,
+    icon: 'i-lucide-app-window',
+    onSelect: selectAndClear(() => launch(app.base64url),
+    ),
+  })),
+)
 
 // 分组数组
 const groups = computed(() => [

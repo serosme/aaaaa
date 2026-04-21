@@ -9,11 +9,6 @@ export function invoke<K extends keyof IPCChannels>(
 }
 
 const electronAPI: ElectronAPI = {
-  application: {
-    get: () => invoke('application:get'),
-    launch: (id: string) => invoke('application:launch', id),
-  },
-
   chat: {
     send: (text: string) => invoke('chat:send', text),
   },

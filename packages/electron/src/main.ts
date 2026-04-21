@@ -1,5 +1,4 @@
 import { app, globalShortcut, Menu } from 'electron'
-import { applicationIpc } from './ipc/application.js'
 import { chatIpc } from './ipc/chat.js'
 import { pathIpc } from './ipc/path.js'
 import { windowIpc } from './ipc/window.js'
@@ -22,7 +21,6 @@ app.whenReady().then(async () => {
   await useChat()
 
   // 注册 IPC
-  applicationIpc()
   chatIpc()
   pathIpc()
   windowIpc()
