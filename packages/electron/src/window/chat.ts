@@ -12,6 +12,10 @@ export async function useChat() {
     width: 1600,
     height: 900,
     titleBarStyle: 'hidden',
+    titleBarOverlay: {
+      color: '#FFFFFF',
+      symbolColor: '#000000',
+    },
   })
 
   const BOTTOM_HEIGHT = 80
