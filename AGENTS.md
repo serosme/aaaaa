@@ -25,9 +25,13 @@ npm run lint:fix     # 自动修复 lint 问题
 - **路由**：Nuxt 文件系统路由（`app/pages/`），使用 `hashMode: true`
 - **布局系统**：Nuxt 布局（`app/layouts/`）
 - **IPC 通信**：
-  - `packages/shared/src/ipc/` 定义 IPC 通道类型（`application`、`conf`、`path`、`window`）
-  - `packages/electron/src/ipc/` 实现 IPC 处理逻辑（`application.ts`、`conf.ts`、`path.ts`、`window.ts`）
+  - `packages/shared/src/ipc/` 定义 IPC 通道类型（`conf`、`path`、`window`、`chat`）
+  - `packages/electron/src/ipc/` 实现 IPC 处理逻辑（`path.ts`、`window.ts`、`chat.ts`）
   - `packages/electron/src/preload.ts` 通过 `contextBridge` 暴露 `electronAPI`
+- **应用管理**（Server API）：
+  - `packages/renderer/server/api/app/` - 应用列表与启动 API（`index.get.ts`、`[base64url].get.ts`）
+  - `packages/renderer/app/composables/useApp.ts` - 应用 composable（`useApp()`）
+  - `packages/renderer/shared/utils/base64url.ts` - base64url 编码/解码工具
 - **配置存储**：使用 `electron-store` 存储配置（`MusicConf`、`AsrConf`）
 - **系统托盘**：`packages/electron/src/tray/` 实现托盘菜单
 - **窗口管理**：
@@ -38,7 +42,8 @@ npm run lint:fix     # 自动修复 lint 问题
 
 ## 类型定义
 
-- `packages/shared/src/types/` - 类型定义（`asr.ts`、`music.ts`）
+- `packages/shared/src/types/` - 共享类型定义（`asr.ts`、`music.ts`）
+- `packages/renderer/shared/types/` - Nuxt 本地类型定义（`application.ts`）
 - `packages/shared/src/store.ts` - Store 类型定义（`StoreSchema`）
 - `packages/shared/src/electron/index.ts` - `ElectronAPI` 接口定义
 - `packages/renderer/app/types/electron.d.ts` - 全局 `Window.electronAPI` 类型扩展
