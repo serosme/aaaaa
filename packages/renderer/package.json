@@ -9,6 +9,7 @@
     "preview": "nuxt build && nuxt preview"
   },
   "dependencies": {
+    "@nuxt/image": "^2.0.0",
     "@nuxt/ui": "^4.6.1",
     "conf": "^15.1.0",
     "nuxt": "^4.4.2",

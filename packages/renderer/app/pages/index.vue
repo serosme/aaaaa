@@ -10,6 +10,11 @@ interface CommandItem {
 // Pages
 const pages = [
   {
+    label: 'Music',
+    icon: 'i-lucide-globe',
+    onSelect: selectAndClear(() => electron.window.create('/music')),
+  },
+  {
     label: 'Setting',
     icon: 'i-lucide-globe',
     onSelect: selectAndClear(() => electron.window.create('/setting')),
