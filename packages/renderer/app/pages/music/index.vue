@@ -17,7 +17,7 @@ function formatTime(seconds: number): string {
       <div id="1-2" class="flex-1 bg-gray-200" />
     </div>
     <div id="2" class="flex h-1/6 gap-6 px-6">
-      <div id="2-1" class="w-1/6 flex items-center gap-3">
+      <div id="2-1" class="w-1/6 flex items-center gap-4">
         <NuxtImg
           src="https://picsum.photos/200"
           class="rounded-md size-16 object-cover shrink-0"
