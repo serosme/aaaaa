@@ -5,7 +5,11 @@ export function createWindow(routePath: string): number {
   const newWindow = new BrowserWindow({
     width: 1280,
     height: 720,
-    skipTaskbar: false,
+    titleBarStyle: 'hidden',
+    titleBarOverlay: {
+      color: '#FFFFFF',
+      symbolColor: '#000000',
+    },
     webPreferences: {
       preload: fileURLToPath(new URL('../preload.js', import.meta.url)),
       sandbox: false,
