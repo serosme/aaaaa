@@ -28,7 +28,7 @@ function formatTime(seconds: number): string {
         </div>
       </div>
       <div id="2-2" class="w-3/5 flex flex-col items-center justify-center gap-3">
-        <div class="flex items-center justify-center gap-10">
+        <div class="flex items-center justify-center gap-8">
           <Icon name="solar:shuffle-outline" class="text-neutral cursor-pointer" size="1.5em" />
           <Icon name="solar:skip-previous-bold" class="text-neutral cursor-pointer" size="1.5em" />
           <Icon name="solar:play-circle-bold" class="text-primary cursor-pointer" size="3em" />
