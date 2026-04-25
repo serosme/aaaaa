@@ -14,8 +14,6 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^8.2.0",
-    "@iconify-json/lucide": "^1.2.103",
-    "@iconify-json/solar": "^1.2.5",
     "concurrently": "^9.2.1",
     "eslint": "^10.2.1",
     "eslint-plugin-format": "^2.0.1"
