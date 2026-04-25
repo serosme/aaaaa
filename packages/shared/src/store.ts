@@ -33,7 +33,15 @@ export const schema = {
     type: 'array',
     default: [
       {
+        key: 'qwen',
+        js: 'https://chat.qwen.ai',
+      },
+      {
         key: 'deepseek',
+        js: '// 默认中继脚本\nconsole.log("relay loaded");',
+      },
+      {
+        key: 'chatgpt',
         js: '// 默认中继脚本\nconsole.log("relay loaded");',
       },
     ],

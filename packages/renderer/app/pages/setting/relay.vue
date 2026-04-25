@@ -32,30 +32,33 @@ async function onSubmit() {
           class="cursor-pointer w-fit lg:ms-auto"
         />
       </UPageCard>
-      <UPageCard
-        v-for="(item, index) in conf"
-        :key="index"
-      >
-        <UFormField
-          label="标识"
-          description="Used to sign in, for email receipts and product updates."
-          class="flex max-sm:flex-col justify-between items-start gap-4"
+      <div class="grid grid-cols-2 gap-6">
+        <UCard
+          v-for="(item, index) in conf"
+          :key="index"
         >
-          <UInput
-            v-model="item.key"
-            type="text"
-          />
-        </UFormField>
-        <UFormField
-          label="脚本"
-          description="Used to sign in, for email receipts and product updates."
-          class="flex max-sm:flex-col justify-between items-start gap-4"
-        >
-          <UTextarea
-            v-model="item.key"
-          />
-        </UFormField>
-      </UPageCard>
+          <div class="flex flex-col  justify-center gap-2">
+            <UFormField label="标识">
+              <UInput
+                v-model="item.key"
+                class="w-full"
+              />
+            </UFormField>
+            <UFormField label="脚本">
+              <UInput
+                v-model="item.js"
+                class="w-full"
+              />
+            </UFormField>
+            <UFormField label="脚本">
+              <UTextarea
+                v-model="item.js"
+                class="w-full"
+              />
+            </UFormField>
+          </div>
+        </UCard>
+      </div>
     </UForm>
   </UCard>
 </template>

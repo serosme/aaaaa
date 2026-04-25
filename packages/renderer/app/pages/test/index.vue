@@ -1,6 +1,6 @@
-<script setup lang="ts">
-</script>
-
 <template>
-  <div>测试</div>
+  <UCard>
+    <div>aa</div>
+    <div>aa</div>
+  </ucard>
 </template>
