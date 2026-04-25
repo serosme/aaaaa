@@ -7,12 +7,6 @@ export default defineNuxtConfig({
   ui: {
     fonts: false,
   },
-  icon: {
-    provider: 'server',
-    serverBundle: {
-      collections: ['lucide'],
-    },
-  },
   vite: {
     optimizeDeps: {
       include: [
