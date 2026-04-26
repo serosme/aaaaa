@@ -33,31 +33,35 @@ export const schema = {
     type: 'array',
     default: [
       {
-        key: 'qwen',
-        js: 'https://chat.qwen.ai',
+        name: 'qwen',
+        url: 'https://chat.qwen.ai',
+        send: 'alert(\'Hello {{TEXT}}!\');',
       },
       {
-        key: 'deepseek',
-        js: '// 默认中继脚本\nconsole.log("relay loaded");',
+        name: 'deepseek',
+        url: 'https://chat.deepseek.com',
+        send: 'alert(\'Hello {{TEXT}}!\');',
       },
       {
-        key: 'chatgpt',
-        js: '// 默认中继脚本\nconsole.log("relay loaded");',
+        name: 'chatgpt',
+        url: 'https://chatgpt.com',
+        send: 'alert(\'Hello {{TEXT}}!\');',
       },
     ],
     items: {
       type: 'object',
       properties: {
-        key: {
+        name: {
           type: 'string',
-          description: '中继的唯一标识',
         },
-        js: {
+        url: {
           type: 'string',
-          description: '中继的 JavaScript 代码或脚本',
+        },
+        send: {
+          type: 'string',
         },
       },
-      required: ['key', 'js'],
+      required: ['name', 'url', 'send'],
       additionalProperties: false,
     },
   },

@@ -1,4 +1,5 @@
 export interface RelayConf {
-  key: string
-  js: string
+  name: string
+  url: string
+  send: string
 }

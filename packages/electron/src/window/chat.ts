@@ -1,13 +1,29 @@
+import type { RelayConf } from 'shared'
 import { fileURLToPath } from 'node:url'
-import { BrowserWindow, session, WebContentsView } from 'electron'
+import { BrowserWindow, net, session, WebContentsView } from 'electron'
 
 const chatViews: Record<string, WebContentsView> = {}
+let relayConf: RelayConf[] = []
 
-export function getChatViews() {
-  return chatViews
+export async function executeJavaScriptForSites(text: string) {
+  const promises = []
+
+  for (const site of relayConf) {
+    const chatView = chatViews[site.name]
+    if (chatView) {
+      const script = site.send.replace(/\{\{TEXT\}\}/g, text)
+      promises.push(chatView.webContents.executeJavaScript(script))
+    }
+  }
+
+  await Promise.all(promises)
 }
 
 export async function useChat() {
+  // 获取配置
+  const response = await net.fetch('http://localhost:3000/api/conf/relay')
+  relayConf = response.ok ? await response.json() as RelayConf[] : []
+
   const win = new BrowserWindow({
     width: 1600,
     height: 900,
@@ -20,13 +36,6 @@ export async function useChat() {
 
   const BOTTOM_HEIGHT = 80
 
-  // 写死的配置
-  const sites = [
-    { name: 'qwen', url: 'https://chat.qwen.ai' },
-    { name: 'deepseek', url: 'https://chat.deepseek.com' },
-    { name: 'chatgpt', url: 'https://chatgpt.com' },
-  ]
-
   async function applyProxy(partition: string) {
     const ses = session.fromPartition(partition)
 
@@ -34,7 +43,7 @@ export async function useChat() {
       proxyRules: 'http=127.0.0.1:7890;https=127.0.0.1:7890',
     })
   }
-  for (const site of sites) {
+  for (const site of relayConf) {
     await applyProxy(`persist:${site.name}`)
   }
 
@@ -52,7 +61,7 @@ export async function useChat() {
   bottomView.webContents.openDevTools()
 
   // 创建横向排布的视图
-  const views = sites.map((site) => {
+  const views = relayConf.map((site) => {
     const view = new WebContentsView({
       webPreferences: {
         partition: `persist:${site.name}`,
