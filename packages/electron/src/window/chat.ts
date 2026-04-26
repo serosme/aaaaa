@@ -2,86 +2,85 @@ import type { RelayConf } from 'shared'
 import { fileURLToPath } from 'node:url'
 import { BrowserWindow, net, session, WebContentsView } from 'electron'
 
-const chatViews: Record<string, WebContentsView> = {}
+const PROXY_RULES = 'http=127.0.0.1:7890;https=127.0.0.1:7890'
+const BOTTOM_HEIGHT = 80
+const DEFAULT_WINDOW_SIZE = { width: 1600, height: 900 }
+
+const chatViews: Map<string, WebContentsView> = new Map()
 let relayConf: RelayConf[] = []
 
+// 执行 JavaScript 脚本
 export async function executeJavaScriptForSites(text: string) {
-  const promises = []
-
-  for (const site of relayConf) {
-    const chatView = chatViews[site.name]
-    if (chatView) {
-      const script = site.send.replace(/\{\{TEXT\}\}/g, text)
-      promises.push(chatView.webContents.executeJavaScript(script))
-    }
+  if (!text) {
+    console.warn('executeJavaScriptForSites: text is empty')
+    return
   }
 
-  await Promise.all(promises)
+  const promises = relayConf
+    .filter(site => chatViews.has(site.name))
+    .map((site) => {
+      const chatView = chatViews.get(site.name)!
+      const script = site.send.replace(/\{\{TEXT\}\}/g, text)
+      return chatView.webContents.executeJavaScript(script)
+        .catch((error) => {
+          console.error(`[${site.name}] 执行失败:`, error)
+        })
+    })
+
+  if (promises.length > 0) {
+    await Promise.allSettled(promises)
+  }
 }
 
-export async function useChat() {
-  // 获取配置
-  const response = await net.fetch('http://localhost:3000/api/conf/relay')
-  relayConf = response.ok ? await response.json() as RelayConf[] : []
+// 应用代理配置（并行执行）
+async function applyProxies(sites: RelayConf[]) {
+  const proxyPromises = sites.map(site =>
+    session.fromPartition(`persist:${site.name}`).setProxy({ proxyRules: PROXY_RULES }).catch(error => console.error(`[${site.name}] 代理配置失败:`, error)),
+  )
 
-  const win = new BrowserWindow({
-    width: 1600,
-    height: 900,
-    titleBarStyle: 'hidden',
-    titleBarOverlay: {
-      color: '#FFFFFF',
-      symbolColor: '#000000',
-    },
-  })
+  await Promise.allSettled(proxyPromises)
+}
 
-  const BOTTOM_HEIGHT = 80
-
-  async function applyProxy(partition: string) {
-    const ses = session.fromPartition(partition)
-
-    await ses.setProxy({
-      proxyRules: 'http=127.0.0.1:7890;https=127.0.0.1:7890',
-    })
-  }
-  for (const site of relayConf) {
-    await applyProxy(`persist:${site.name}`)
-  }
-
-  // 创建底部视图
-  const bottomView = new WebContentsView({
+// 创建 WebContentsView
+function createWebContentsView(partition: string, url: string) {
+  const view = new WebContentsView({
     webPreferences: {
-      partition: 'persist:bottom',
+      partition: `persist:${partition}`,
       preload: fileURLToPath(new URL('../preload.js', import.meta.url)),
       sandbox: false,
       contextIsolation: true,
     },
   })
-  bottomView.webContents.loadURL('http://localhost:3000/chat')
-  win.contentView.addChildView(bottomView)
-  bottomView.webContents.openDevTools()
+  view.webContents.loadURL(url)
+  return view
+}
 
-  // 创建横向排布的视图
-  const views = relayConf.map((site) => {
-    const view = new WebContentsView({
-      webPreferences: {
-        partition: `persist:${site.name}`,
-        preload: fileURLToPath(new URL('../preload.js', import.meta.url)),
-        sandbox: false,
-        contextIsolation: true,
-      },
-    })
-    view.webContents.loadURL(site.url)
-    win.contentView.addChildView(view)
-    chatViews[site.name] = view
-    return view
-  })
+// 获取配置
+async function fetchRelayConf(): Promise<RelayConf[]> {
+  try {
+    const response = await net.fetch('http://localhost:3000/api/conf/relay')
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`)
+    }
+    return await response.json() as RelayConf[]
+  }
+  catch (error) {
+    console.error('获取配置失败:', error)
+    return []
+  }
+}
 
-  const layout = () => {
+// 布局管理
+function createLayoutManager(win: BrowserWindow, views: WebContentsView[], bottomView: WebContentsView) {
+  const updateLayout = () => {
     const { width, height } = win.getBounds()
     const viewCount = views.length
+
+    if (viewCount === 0)
+      return
+
     const viewWidth = width / viewCount
 
-    // 横向排布
     views.forEach((view, index) => {
       view.setBounds({
         x: index * viewWidth,
@@ -91,7 +90,6 @@ export async function useChat() {
       })
     })
 
-    // 底部视图
     bottomView.setBounds({
       x: 0,
       y: height - BOTTOM_HEIGHT,
@@ -100,14 +98,64 @@ export async function useChat() {
     })
   }
 
-  win.on('resize', layout)
-  layout()
-  win.show()
+  win.on('resize', updateLayout)
+  return updateLayout
+}
 
-  // 清理资源
+// 清理资源
+function cleanup(win: BrowserWindow, views: WebContentsView[], bottomView: WebContentsView) {
   win.on('closed', () => {
     bottomView.webContents.close()
     views.forEach(view => view.webContents.close())
-    Object.keys(chatViews).forEach(key => delete chatViews[key])
+    chatViews.clear()
   })
+}
+
+// 主函数
+export async function useChat() {
+  // 获取配置
+  relayConf = await fetchRelayConf()
+
+  if (relayConf.length === 0) {
+    console.warn('没有获取到有效的站点配置')
+    return
+  }
+
+  // 创建窗口
+  const win = new BrowserWindow({
+    ...DEFAULT_WINDOW_SIZE,
+    titleBarStyle: 'hidden',
+    titleBarOverlay: {
+      color: '#FFFFFF',
+      symbolColor: '#000000',
+    },
+    show: false, // 先隐藏，布局完成后再显示
+  })
+
+  // 并行应用代理
+  await applyProxies(relayConf)
+
+  // 创建底部视图
+  const bottomView = createWebContentsView('bottom', 'http://localhost:3000/chat')
+  win.contentView.addChildView(bottomView)
+  bottomView.webContents.openDevTools()
+
+  // 创建聊天视图
+  const views = relayConf.map((site) => {
+    const view = createWebContentsView(site.name, site.url)
+    win.contentView.addChildView(view)
+    view.webContents.openDevTools()
+    chatViews.set(site.name, view)
+    return view
+  })
+
+  // 布局管理
+  const layout = createLayoutManager(win, views, bottomView)
+  layout()
+
+  // 清理资源
+  cleanup(win, views, bottomView)
+
+  // 显示窗口
+  win.show()
 }

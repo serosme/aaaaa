@@ -35,17 +35,56 @@ export const schema = {
       {
         name: 'qwen',
         url: 'https://chat.qwen.ai',
-        send: 'alert(\'Hello {{TEXT}}!\');',
+        send: `
+          ;(() => {
+            const input = document.querySelector('.message-input-textarea')
+            if (input) {
+              Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set.call(input, '{{TEXT}}')
+              input.dispatchEvent(new Event('input', {bubbles: true}))
+            }
+            setTimeout(() => {
+              const send = document.querySelector('.send-button')
+              if (send) {
+                send.click()
+              }
+            }, 50);
+          })()
+        `,
       },
       {
         name: 'deepseek',
         url: 'https://chat.deepseek.com',
-        send: 'alert(\'Hello {{TEXT}}!\');',
+        send: `
+          ;(() => {
+            const input = document.querySelector('._27c9245')
+            if (input) {
+              Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set.call(input, '{{TEXT}}')
+              input.dispatchEvent(new Event('input', {bubbles: true}))
+            }
+            setTimeout(() => {
+              const send = document.querySelector('._52c986b');
+              if (send) {
+                  send.click();
+              }
+            }, 50);
+          })()
+        `,
       },
       {
         name: 'chatgpt',
         url: 'https://chatgpt.com',
-        send: 'alert(\'Hello {{TEXT}}!\');',
+        send: `
+          ;(() => {
+            const prompt = document.querySelector('#prompt-textarea')
+            prompt.innerHTML = '<p>{{TEXT}}</p>';
+            setTimeout(() => {
+              const send = document.querySelector('#composer-submit-button');
+              if (send) {
+                  send.click();
+              }
+            }, 50);
+          })()
+        `,
       },
     ],
     items: {
