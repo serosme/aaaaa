@@ -39,7 +39,8 @@ export const schema = {
           ;(() => {
             const input = document.querySelector('.message-input-textarea')
             if (input) {
-              Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set.call(input, '{{TEXT}}')
+              const text = {{TEXT_JSON}};
+              Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set.call(input, text)
               input.dispatchEvent(new Event('input', {bubbles: true}))
             }
             setTimeout(() => {
@@ -47,7 +48,7 @@ export const schema = {
               if (send) {
                 send.click()
               }
-            }, 50);
+            }, 50)
           })()
         `,
       },
@@ -58,15 +59,16 @@ export const schema = {
           ;(() => {
             const input = document.querySelector('._27c9245')
             if (input) {
-              Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set.call(input, '{{TEXT}}')
+              const text = {{TEXT_JSON}};
+              Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set.call(input, text)
               input.dispatchEvent(new Event('input', {bubbles: true}))
             }
             setTimeout(() => {
-              const send = document.querySelector('._52c986b');
+              const send = document.querySelector('._52c986b')
               if (send) {
-                  send.click();
+                  send.click()
               }
-            }, 50);
+            }, 50)
           })()
         `,
       },
@@ -75,14 +77,20 @@ export const schema = {
         url: 'https://chatgpt.com',
         send: `
           ;(() => {
-            const prompt = document.querySelector('#prompt-textarea')
-            prompt.innerHTML = '<p>{{TEXT}}</p>';
+            const input = document.querySelector('#prompt-textarea')
+            if (input) {
+              const text = {{TEXT_JSON}};
+              const p = document.createElement('p');
+              p.textContent = text;
+              input.innerHTML = '';
+              input.appendChild(p);
+            }
             setTimeout(() => {
-              const send = document.querySelector('#composer-submit-button');
+              const send = document.querySelector('#composer-submit-button')
               if (send) {
-                  send.click();
+                  send.click()
               }
-            }, 50);
+            }, 50)
           })()
         `,
       },

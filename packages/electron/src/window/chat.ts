@@ -20,7 +20,8 @@ export async function executeJavaScriptForSites(text: string) {
     .filter(site => chatViews.has(site.name))
     .map((site) => {
       const chatView = chatViews.get(site.name)!
-      const script = site.send.replace(/\{\{TEXT\}\}/g, text)
+      const textJson = JSON.stringify(text)
+      const script = site.send.replace(/\{\{TEXT_JSON\}\}/g, textJson)
       return chatView.webContents.executeJavaScript(script)
         .catch((error) => {
           console.error(`[${site.name}] 执行失败:`, error)
