@@ -1,6 +1,6 @@
+import type { AsrConf } from './conf/asr.js'
+import type { MusicConf } from './conf/music.js'
 import type { RelayConf } from './conf/relay.js'
-import type { AsrConf } from './types/asr.js'
-import type { MusicConf } from './types/music.js'
 
 export const schema = {
   music: {
