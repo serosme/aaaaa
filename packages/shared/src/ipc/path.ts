@@ -4,3 +4,11 @@ export interface PathIPCChannels {
     return: string
   }
 }
+
+export interface PathElectronAPI {
+  path: {
+    folder: {
+      select: () => Promise<string>
+    }
+  }
+}

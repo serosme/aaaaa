@@ -9,12 +9,9 @@ export function invoke<K extends keyof IPCChannels>(
 }
 
 const electronAPI: ElectronAPI = {
-  chat: {
-    send: (text: string) => invoke('chat:send', text),
-  },
-
   relay: {
     open: () => invoke('relay:open'),
+    send: (text: string) => invoke('relay:send', text),
   },
 
   path: {

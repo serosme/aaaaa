@@ -2,7 +2,7 @@
 const input = ref('')
 
 async function submit() {
-  await electron.chat.send(input.value)
+  await electron.relay.send(input.value)
   input.value = ''
 }
 </script>

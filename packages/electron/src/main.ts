@@ -1,5 +1,4 @@
 import { app, globalShortcut, Menu } from 'electron'
-import { chatIpc } from './ipc/chat.js'
 import { pathIpc } from './ipc/path.js'
 import { relayIpc } from './ipc/relay.js'
 import { windowIpc } from './ipc/window.js'
@@ -19,7 +18,6 @@ app.whenReady().then(async () => {
   await create()
 
   // 注册 IPC
-  chatIpc()
   pathIpc()
   windowIpc()
   relayIpc()

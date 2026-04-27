@@ -1,12 +1,9 @@
 import type { ElectronAPI } from 'shared'
 
 export const electron = {
-  chat: {
-    send: (text: string) => window.electronAPI.chat.send(text),
-  },
-
   relay: {
     open: () => window.electronAPI.relay.open(),
+    send: (text: string) => window.electronAPI.relay.send(text),
   },
 
   path: {

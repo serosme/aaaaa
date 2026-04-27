@@ -8,3 +8,10 @@ export interface WindowIPCChannels {
     return: boolean
   }
 }
+
+export interface WindowElectronAPI {
+  window: {
+    create: (path: string) => Promise<number>
+    close: (id: number) => Promise<boolean>
+  }
+}
