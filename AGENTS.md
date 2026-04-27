@@ -8,6 +8,39 @@
 - `packages/electron` - Electron 主进程（TypeScript、electron-builder 打包、conf 配置存储）
 - `packages/shared` - 类型定义包（IPC 通道、ElectronAPI、类型接口，无具体实现）
 
+## 包功能
+
+### packages/electron - 主进程
+
+- **应用入口**：`main.ts` 初始化托盘、全局快捷键（Alt+Space）、注册 IPC 处理器、启动渲染进程
+- **窗口管理**：
+  - `command.ts` - 命令面板窗口（浮动、skipTaskbar、Alt+Space 切换、失焦隐藏）
+  - `home.ts` - 通用窗口创建/关闭（支持路由参数，生产环境注入 hash 参数）
+  - `relay.ts` - 中继聊天窗口（WebContentsView 多站点、独立 partition、代理配置、JS 注入）
+- **IPC 处理**：`path:folder:select`（目录选择对话框）、`window:create`/`window:close`（窗口管理）、`relay:open`/`relay:send`（中继聊天）
+- **系统托盘**：`tray/index.ts` 托盘图标与菜单
+- **窗口工具**：`utils/window.ts`（`startRendererProcess` 等待 Nuxt 启动、`loadURL` 加载页面、`openDevTools`）
+- **preload**：`preload.ts` 通过 `contextBridge` 暴露类型化 `electronAPI`
+
+### packages/renderer - 渲染进程
+
+- **页面**：命令面板（`index.vue`）、中继聊天（`chat/index.vue`）、音乐播放（`music/index.vue`）、设置页（`setting/asr.vue`、`setting/music.vue`、`setting/relay.vue`）
+- **布局**：`default.vue`（全屏布局）、`setting.vue`（侧边栏设置布局）
+- **Composables**：
+  - `useApp()` - 应用列表与启动
+  - `useConf(key)` - 响应式配置 CRUD（`load`/`save`）
+  - `useSpeechRecognition()` - MediaRecorder 录音与 Base64 编码
+  - `useSpeechRecognitionToast()` - 语音识别状态 Toast 管理
+- **Server API**：应用管理（`/api/app`）、配置读写（`/api/conf/[key]`）、语音识别代理（`/api/asr`）、音乐流式播放（`/api/music`，支持 HTTP range）
+- **工具**：`base64url.ts` 编码/解码、`electron.ts` 类型化 `window.electronAPI` 包装
+
+### packages/shared - 共享类型
+
+- **IPC 类型**：`IPCChannels`（通道定义）、`ElectronAPI`（preload 暴露接口）
+- **配置类型**：`StoreSchema`（asr、music、relay）、`AsrConf`、`MusicConf`、`RelayConf`
+- **配置 Schema**：`schema` 对象（供 `conf` 包使用，含默认值）
+- **业务类型**：`Music`（id、name）
+
 ## 命令
 
 ```bash
@@ -24,11 +57,7 @@ npm run lint:fix     # 自动修复 lint 问题
 - **全局快捷键**：`Alt+Space` 切换命令面板显示/隐藏，窗口失焦自动隐藏
 - **路由**：Nuxt 4 `app/` 目录文件系统路由（`app/pages/`）
 - **布局系统**：Nuxt 布局（`app/layouts/`），包含 `default.vue` 和 `setting.vue`
-- **IPC 通信**：
-  - `packages/shared/src/ipc/` 定义 IPC 通道类型（`path`、`window`、`relay`）
-  - `packages/electron/src/ipc.ts` - IPC `handle()` 辅助函数
-  - `packages/electron/src/ipc/` 实现 IPC 处理逻辑（`path.ts`、`window.ts`、`relay.ts`）
-  - `packages/electron/src/preload.ts` 通过 `contextBridge` 暴露 `electronAPI`
+- **系统托盘**：`packages/electron/src/tray/` 实现托盘菜单
 - **应用管理**（Server API）：
   - `packages/renderer/server/api/app/` - 应用列表与启动 API（`index.get.ts`、`[base64url].get.ts`）
   - `packages/renderer/app/composables/useApp.ts` - 应用 composable（`useApp()`）
@@ -49,7 +78,6 @@ npm run lint:fix     # 自动修复 lint 问题
   - `packages/electron/src/ipc/relay.ts` - `relay:open` / `relay:send` IPC 处理
   - `packages/shared/src/conf/relay.ts` - RelayConf 类型（name、url、send）
   - `packages/renderer/app/pages/chat/index.vue` - 中继聊天输入页
-- **系统托盘**：`packages/electron/src/tray/` 实现托盘菜单
 - **窗口管理**：
   - `packages/electron/src/window/command.ts` - 命令面板窗口（Alt+Space 切换、失焦隐藏、skipTaskbar）
   - `packages/electron/src/window/home.ts` - 通用窗口创建（支持路由跳转）
@@ -58,7 +86,33 @@ npm run lint:fix     # 自动修复 lint 问题
 - **输出目录**：`packages/*/dist/` 为编译输出，`packages/renderer/.output/` 为 Nuxt 构建输出，`packages/electron/release/` 为打包输出（Windows zip）
 - **样式**：Tailwind CSS 4 + Nuxt UI，CSS 入口 `app/assets/css/main.css`，VSCode 中 CSS 文件关联为 `tailwindcss` 语言
 
-## 类型定义
+## 包间协作
+
+### IPC 类型驱动架构
+
+IPC 通信采用类型驱动设计，三端共享同一份类型定义，实现端到端类型安全。每个通道在 `shared/src/ipc/` 中定义两个接口：`*IPCChannels` 描述通道契约（`args`/`return`），`*ElectronAPI` 描述渲染进程调用接口。`index.ts` 通过交叉类型组合所有通道为 `IPCChannels` 和 `ElectronAPI`。
+
+**主进程注册 handler**：`packages/electron/src/ipc.ts` 提供 `handle()` 辅助函数，基于 `IPCChannels` 类型约束 channel 名称和 handler 参数/返回值。各模块（`path.ts`、`window.ts`、`relay.ts`）调用 `handle()` 注册具体逻辑，在 `main.ts` 中统一初始化。
+
+**Preload 桥接**：`packages/electron/src/preload.ts` 提供 `invoke()` 辅助函数，基于 `IPCChannels` 类型约束 channel 和参数。构造 `ElectronAPI` 对象，通过 `contextBridge.exposeInMainWorld` 暴露为 `window.electronAPI`。
+
+**渲染进程调用**：`packages/renderer/app/utils/electron.ts` 包装 `window.electronAPI` 为类型化的 `electron` 对象。`packages/renderer/app/types/electron.d.ts` 通过 `declare global` 扩展 `Window` 接口。
+
+### 配置管理（非 IPC，通过 Server API）
+
+配置读写不走 IPC，而是渲染进程通过 `$fetch` 调用 Nitro Server API（`/api/conf/[key]` GET/POST），服务端使用 `conf` 包读写 `~/.config/tools/config.json`，`useConf(key)` composable 提供响应式 CRUD 接口。
+
+### IPC 通道定义与使用
+
+每个 IPC 通道在 `packages/shared/src/ipc/` 中定义两个接口：`*IPCChannels` 描述通道契约（args/return），`*ElectronAPI` 描述渲染进程调用接口。目前有 path、window、relay 三个通道分类。
+
+`index.ts` 通过交叉类型组合所有通道为 `IPCChannels` 和 `ElectronAPI`。主进程通过 `handle()` 注册 handler，preload 通过 `invoke()` 桥接，渲染进程通过 `electron` 对象调用。
+
+### 配置管理
+
+配置读写不走 IPC，而是渲染进程通过 `$fetch` 调用 Nitro Server API（`/api/conf/[key]` GET/POST），服务端使用 `conf` 包读写 `~/.config/tools/config.json`，`useConf(key)` composable 提供响应式 CRUD 接口。
+
+### 类型定义
 
 - `packages/shared/src/types/` - 共享类型定义（`asr.ts`、`music.ts`、`index.ts`）
 - `packages/shared/src/conf/` - 配置类型定义（`relay.ts`、`index.ts`）
