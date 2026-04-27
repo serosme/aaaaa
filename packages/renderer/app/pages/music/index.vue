@@ -4,20 +4,20 @@ import type { TableColumn } from '@nuxt/ui'
 const {
   musics,
   current,
-  load,
   next,
   prev,
   playing,
   currentTime,
   duration,
-} = useMusic(useTemplateRef('audio'))
-
-const volume = ref(80)
+  volume,
+} = useMusic()
 
 function formatTime(seconds: number): string {
-  const m = Math.floor(seconds / 60)
-  const s = seconds % 60
-  return `${m}:${s.toString().padStart(2, '0')}`
+  const total = Math.round(seconds)
+  const minutes = Math.floor(total / 60)
+  const secs = total % 60
+
+  return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`
 }
 
 const columns: TableColumn<Music>[] = [
@@ -37,9 +37,7 @@ const columns: TableColumn<Music>[] = [
           class="h-full"
         />
       </div>
-      <div id="1-2" class="flex-1 bg-gray-200">
-        <audio ref="audio" />
-      </div>
+      <div id="1-2" class="flex-1 bg-gray-200" />
     </div>
     <div id="2" class="flex h-1/6 gap-6 px-6">
       <div id="2-1" class="w-1/5 flex items-center gap-4">
@@ -104,7 +102,9 @@ const columns: TableColumn<Music>[] = [
             v-model="currentTime"
             :min="0"
             :max="duration"
-            class="flex-1"
+            :ui="{
+              root: 'cursor-pointer',
+            }"
           />
           <span class="text-sm tabular-nums">{{ formatTime(duration) }}</span>
         </div>
@@ -119,8 +119,11 @@ const columns: TableColumn<Music>[] = [
         <USlider
           v-model="volume"
           :min="0"
-          :max="100"
-          class="flex-1"
+          :max="1"
+          :step="0.01"
+          :ui="{
+            root: 'cursor-pointer',
+          }"
         />
       </div>
     </div>

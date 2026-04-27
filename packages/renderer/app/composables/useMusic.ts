@@ -1,6 +1,7 @@
 import { useMediaControls } from '@vueuse/core'
 
-export function useMusic(audio: Ref<HTMLAudioElement>) {
+export function useMusic() {
+  const audio = ref<HTMLAudioElement>()
   const musics = ref<Music[]>([])
   const index = ref<number>(0)
   const current = computed(() => {
@@ -15,14 +16,17 @@ export function useMusic(audio: Ref<HTMLAudioElement>) {
       return ''
     return `/api/music/${current.value.base64url}`
   })
-  const { playing, currentTime, duration, volume } = useMediaControls(audio, { src })
+  const { playing, currentTime, duration, volume } = useMediaControls(
+    audio,
+    { src },
+  )
 
   const load = async () => {
     const data = await $fetch(`/api/music`)
     musics.value = data
   }
 
-  const playAt = async (i: number) => {
+  const playAt = (i: number) => {
     index.value = i
   }
 
@@ -38,16 +42,19 @@ export function useMusic(audio: Ref<HTMLAudioElement>) {
     playAt(prevIndex)
   }
 
-  onMounted(load)
+  onMounted(async () => {
+    audio.value = new Audio()
+    await load()
+  })
 
   return {
     musics,
     current,
-    load,
     next,
     prev,
     playing,
     currentTime,
     duration,
+    volume,
   }
 }
