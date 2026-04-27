@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { TableColumn } from '@nuxt/ui'
+
 const volume = ref(80)
 const currentTime = ref(0)
 const totalTime = ref(240)
@@ -8,12 +10,41 @@ function formatTime(seconds: number): string {
   const s = seconds % 60
   return `${m}:${s.toString().padStart(2, '0')}`
 }
+
+interface MusicItem {
+  index: number
+  name: string
+  duration: string
+}
+
+const musicList = ref<MusicItem[]>([])
+
+onMounted(async () => {
+  const list = await $fetch('/api/music')
+  musicList.value = list.map((item, i) => ({
+    index: i + 1,
+    name: item.name,
+    duration: '',
+  }))
+})
+
+const columns: TableColumn<MusicItem>[] = [
+  { accessorKey: 'index', header: '#', meta: { class: { th: 'w-12', td: 'text-gray-500' } } },
+  { accessorKey: 'name', header: '名称' },
+  { accessorKey: 'duration', header: '时长', meta: { class: { th: 'w-20', td: 'text-gray-500' } } },
+]
 </script>
 
 <template>
   <div class="flex h-screen flex-col">
     <div id="1" class="flex flex-1">
-      <div id="1-1" class="w-1/3 bg-gray-100" />
+      <div id="1-1" class="w-1/3">
+        <UTable
+          :data="musicList"
+          :columns="columns"
+          class="h-full"
+        />
+      </div>
       <div id="1-2" class="flex-1 bg-gray-200" />
     </div>
     <div id="2" class="flex h-1/6 gap-6 px-6">
