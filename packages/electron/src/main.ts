@@ -1,10 +1,10 @@
 import { app, globalShortcut, Menu } from 'electron'
 import { chatIpc } from './ipc/chat.js'
 import { pathIpc } from './ipc/path.js'
+import { relayIpc } from './ipc/relay.js'
 import { windowIpc } from './ipc/window.js'
 import { createAppTray } from './tray/index.js'
 import { startRendererProcess } from './utils/window.js'
-import { useChat } from './window/chat.js'
 import { useCommand } from './window/command.js'
 
 // 移除默认菜单栏
@@ -18,12 +18,11 @@ app.whenReady().then(async () => {
   const { create, toggle } = useCommand()
   await create()
 
-  await useChat()
-
   // 注册 IPC
   chatIpc()
   pathIpc()
   windowIpc()
+  relayIpc()
 
   // 注册全局快捷键
   globalShortcut.register('Alt+Space', () => toggle())

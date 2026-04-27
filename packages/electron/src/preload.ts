@@ -13,6 +13,10 @@ const electronAPI: ElectronAPI = {
     send: (text: string) => invoke('chat:send', text),
   },
 
+  relay: {
+    open: () => invoke('relay:open'),
+  },
+
   path: {
     folder: {
       select: () => invoke('path:folder:select'),

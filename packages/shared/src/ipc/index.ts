@@ -1,5 +1,6 @@
 import type { ChatIPCChannels } from './chat.js'
 import type { PathIPCChannels } from './path.js'
+import type { RelayIPCChannels } from './relay.js'
 import type { WindowIPCChannels } from './window.js'
 
-export type IPCChannels = PathIPCChannels & WindowIPCChannels & ChatIPCChannels
+export type IPCChannels = PathIPCChannels & WindowIPCChannels & ChatIPCChannels & RelayIPCChannels

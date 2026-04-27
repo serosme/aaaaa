@@ -3,6 +3,10 @@ export interface ElectronAPI {
     send: (text: string) => Promise<void>
   }
 
+  relay: {
+    open: () => Promise<void>
+  }
+
   path: {
     folder: {
       select: () => Promise<string>

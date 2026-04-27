@@ -25,6 +25,11 @@ const pages = [
     onSelect: selectAndClear(() => electron.window.create('/chat')),
   },
   {
+    label: 'relay',
+    icon: 'i-lucide-globe',
+    onSelect: selectAndClear(() => electron.relay.open()),
+  },
+  {
     label: 'Test',
     icon: 'i-lucide-globe',
     onSelect: selectAndClear(() => electron.window.create('/test')),
