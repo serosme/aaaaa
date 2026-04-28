@@ -28,6 +28,9 @@ export function useMusic() {
 
   const playAt = (i: number) => {
     index.value = i
+    setTimeout(() => {
+      playing.value = true
+    }, 50)
   }
 
   const next = () => {
@@ -50,6 +53,7 @@ export function useMusic() {
   return {
     musics,
     current,
+    playAt,
     next,
     prev,
     playing,

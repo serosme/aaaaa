@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { TableColumn } from '@nuxt/ui'
+import type { TableColumn, TableRow } from '@nuxt/ui'
 
 const {
   musics,
   current,
+  playAt,
   next,
   prev,
   playing,
@@ -21,10 +22,27 @@ function formatTime(seconds: number): string {
 }
 
 const columns: TableColumn<Music>[] = [
-  { accessorKey: 'index', header: '#' },
-  { accessorKey: 'title', header: '名称' },
-  { accessorKey: 'duration', header: '时长' },
+  {
+    accessorKey: 'index',
+    header: '#',
+  },
+  {
+    accessorKey: 'title',
+    header: '名称',
+  },
+  {
+    accessorKey: 'duration',
+    header: '时长',
+    cell: ({ getValue }) => {
+      const value = getValue<number>()
+      return formatTime(value)
+    },
+  },
 ]
+
+function onSelect(_e: Event, row: TableRow<Music>) {
+  playAt(row.original.index)
+}
 </script>
 
 <template>
@@ -35,6 +53,7 @@ const columns: TableColumn<Music>[] = [
           :data="musics"
           :columns="columns"
           class="h-full"
+          @select="onSelect"
         />
       </div>
       <div id="1-2" class="flex-1 bg-gray-200" />
