@@ -1,7 +1,7 @@
-import { readdir } from 'node:fs/promises'
-import { extname } from 'node:path'
+import { readdir, readFile } from 'node:fs/promises'
+import path, { extname } from 'node:path'
 import { defineEventHandler } from 'h3'
-import { readProperties, readTags } from 'taglib-wasm/simple'
+import { applyTagsToFile, readProperties, readTags } from 'taglib-wasm/simple'
 
 const musicDir = conf.get('music').path
 const exts = new Set(['.mp3', '.flac'])
@@ -9,14 +9,19 @@ const exts = new Set(['.mp3', '.flac'])
 export default defineEventHandler(async (): Promise<Music[]> => {
   const files = await readdir(musicDir)
   const musicFiles = files.filter(f => exts.has(extname(f).toLowerCase()))
+  const musicPaths = files
+    .filter(f => exts.has(extname(f).toLowerCase()))
+    .map(f => path.resolve(musicDir, f))
+  for (const musicPath of musicPaths) {
+    const properties = await readProperties(musicPath)
+    console.log(properties)
+  }
 
   const result: Music[] = []
 
   for (const f of musicFiles) {
-    const path = `${musicDir}/${f}`
-
-    // const tags = await readTags(path)
-    const properties = await readProperties(path)
+    const fileBuffer = await readFile(path.join(musicDir, f))
+    const properties = await readProperties(fileBuffer)
 
     // const aa = await applyTagsToFile(path, {
     //   title: 'New Title',
