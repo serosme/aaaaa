@@ -1,5 +1,9 @@
 # AGENTS.md
 
+## Agent 规范
+
+- **不读取 .gitignore 忽略的目录和文件**：被 `.gitignore` 排除的目录和文件（`node_modules`、`.nuxt`、`.output`、`dist`、`release`）是生成产物或依赖，不应读取或搜索其内容。
+
 ## 项目结构
 
 基于 npm workspaces 的 Electron + Nuxt 4 单体仓库：
