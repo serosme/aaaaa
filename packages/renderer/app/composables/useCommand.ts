@@ -54,6 +54,11 @@ export function useCommand() {
       icon: 'i-lucide-folder',
       onSelect: () => $fetch(`/api/folder/${base64urlEncode('C:\\Users\\User\\AppData')}`),
     },
+    {
+      label: 'Rime',
+      icon: 'i-lucide-folder',
+      onSelect: () => $fetch(`/api/folder/${base64urlEncode('C:\\Users\\User\\AppData\\Roaming\\Rime')}`),
+    },
   ]
 
   const groups = computed<CommandPaletteGroup[]>(() => [
