@@ -38,7 +38,30 @@ export function useCommand() {
       })),
   )
 
+  const folders: CommandPaletteItem[] = [
+    {
+      label: 'Download',
+      icon: 'i-lucide-download',
+      onSelect: () => $fetch(`/api/folder/${base64urlEncode('C:\\Users\\User\\Downloads')}`),
+    },
+    {
+      label: 'Document',
+      icon: 'i-lucide-folder',
+      onSelect: () => $fetch(`/api/folder/${base64urlEncode('C:\\Users\\User\\Documents')}`),
+    },
+    {
+      label: 'AppData',
+      icon: 'i-lucide-folder',
+      onSelect: () => $fetch(`/api/folder/${base64urlEncode('C:\\Users\\User\\AppData')}`),
+    },
+  ]
+
   const groups = computed<CommandPaletteGroup[]>(() => [
+    {
+      id: 'folders',
+      label: 'Folders',
+      items: folders,
+    },
     {
       id: 'pages',
       label: 'Pages',
