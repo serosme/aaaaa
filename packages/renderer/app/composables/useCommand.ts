@@ -1,25 +1,6 @@
 import type { CommandPaletteGroup, CommandPaletteItem } from '@nuxt/ui'
 
 export function useCommand() {
-  const { data: applications } = useFetch('/api/app', {
-    default: () => [],
-    transform: data => data || [],
-    onRequestError: (err) => {
-      console.error('请求错误:', err)
-    },
-    onResponseError: (err) => {
-      console.error('响应错误:', err)
-    },
-  }) as { data: Ref<Application[]> }
-
-  const apps = computed<CommandPaletteItem[]>(() =>
-    applications.value.map(app => ({
-      label: app.name,
-      icon: 'i-lucide-app-window',
-      onSelect: () => $fetch(`/api/app/${app.base64url}`),
-    })),
-  )
-
   const router = useRouter()
   const routeActions: Record<string, () => void> = {
     '/chat': () => electron.relay.open(),
@@ -61,16 +42,35 @@ export function useCommand() {
     },
   ]
 
-  const groups = computed<CommandPaletteGroup[]>(() => [
-    {
-      id: 'folders',
-      label: 'Folders',
-      items: folders,
+  const { data: applications } = useFetch('/api/app', {
+    default: () => [],
+    transform: data => data || [],
+    onRequestError: (err) => {
+      console.error('请求错误:', err)
     },
+    onResponseError: (err) => {
+      console.error('响应错误:', err)
+    },
+  }) as { data: Ref<Application[]> }
+
+  const apps = computed<CommandPaletteItem[]>(() =>
+    applications.value.map(app => ({
+      label: app.name,
+      icon: 'i-lucide-app-window',
+      onSelect: () => $fetch(`/api/app/${app.base64url}`),
+    })),
+  )
+
+  const groups = computed<CommandPaletteGroup[]>(() => [
     {
       id: 'pages',
       label: 'Pages',
       items: pages.value,
+    },
+    {
+      id: 'folders',
+      label: 'Folders',
+      items: folders,
     },
     {
       id: 'applications',
@@ -81,5 +81,8 @@ export function useCommand() {
 
   return {
     groups,
+    pages,
+    folders,
+    apps,
   }
 }
