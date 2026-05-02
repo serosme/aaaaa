@@ -5,7 +5,6 @@ export function useCommand() {
   const routeActions: Record<string, () => void> = {
     '/chat': () => electron.relay.open(),
   }
-
   const pages = computed<CommandPaletteItem[]>(() =>
     router.getRoutes()
       .filter((route) => {
@@ -17,6 +16,24 @@ export function useCommand() {
         icon: 'i-lucide-globe',
         onSelect: routeActions[route.path] ?? (() => electron.window.create(route.path)),
       })),
+  )
+
+  const { data: zeds } = useFetch('/api/workspace/zed', {
+    default: () => [],
+    transform: data => data || [],
+    onRequestError: (err) => {
+      console.error('请求错误:', err)
+    },
+    onResponseError: (err) => {
+      console.error('响应错误:', err)
+    },
+  }) as { data: Ref<Workspace[]> }
+  const workspaces = computed<CommandPaletteItem[]>(() =>
+    zeds.value.map(workspace => ({
+      label: workspace.name,
+      icon: 'i-lucide-app-window',
+      onSelect: () => $fetch('/api/workspace/open', { method: 'POST', body: { bin: workspace.bin, path: workspace.path } }),
+    })),
   )
 
   const folders: CommandPaletteItem[] = [
@@ -52,7 +69,6 @@ export function useCommand() {
       console.error('响应错误:', err)
     },
   }) as { data: Ref<Application[]> }
-
   const apps = computed<CommandPaletteItem[]>(() =>
     applications.value.map(app => ({
       label: app.name,
@@ -66,6 +82,11 @@ export function useCommand() {
       id: 'pages',
       label: 'Pages',
       items: pages.value,
+    },
+    {
+      id: 'workspaces',
+      label: 'Workspaces',
+      items: workspaces.value,
     },
     {
       id: 'folders',
