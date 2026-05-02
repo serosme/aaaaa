@@ -31,7 +31,7 @@ export function useCommand() {
   const workspaces = computed<CommandPaletteItem[]>(() =>
     zeds.value.map(workspace => ({
       label: workspace.name,
-      icon: 'i-lucide-app-window',
+      icon: 'i-lucide-code',
       onSelect: () => $fetch('/api/workspace/open', { method: 'POST', body: { bin: workspace.bin, path: workspace.path } }),
     })),
   )
